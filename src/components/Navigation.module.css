@@ -1,0 +1,9 @@
+.navigation {
+  color: white;
+  background-color: rgb(40, 40, 40);
+  padding: 2rem;
+}
+
+.links li a {
+  color: white;
+}

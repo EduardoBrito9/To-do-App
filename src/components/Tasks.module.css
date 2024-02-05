@@ -1,0 +1,97 @@
+.tasks {
+    display: flex;
+    color: white;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .taskUser {
+    display: flex;
+    align-items: center;
+  }
+  
+  .checking {
+    transform: scale(1.5);
+  }
+  
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    content: "✔";
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid white;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+  }
+  
+  input[type="checkbox"]:hover {
+    background-color: var(--purpleWhite);
+    transition: 0.3s;
+  }
+  
+  input[type="checkbox"]:checked {
+    background-color: var(--purple);
+    transition: 0.3s;
+    border: 0;
+  }
+  
+  input[type="checkbox"]:checked:after {
+    display: block;
+    content: "✔";
+    font-weight: 900;
+    font-size: 0.6rem;
+    color: white;
+  }
+  
+  .options {
+    display: grid;
+    grid-template-columns: 30px 200px 200px 100px;
+    align-items: start;
+    justify-content: center;
+  }
+  
+  .options p {
+    font-size: 0.9rem;
+    line-break: anywhere;
+  }
+  
+  .delete {
+    color: white;
+    font-weight: 900;
+    border-radius: 50%;
+    background-color: red;
+    border: 0;
+    padding: 0.3rem 0.4rem;
+    justify-self: end;
+    transition: 0.3s;
+  }
+  
+  .delete:hover {
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: rgb(250, 74, 74);
+  }
+  
+  
+  .star {
+    color: white;
+    font-weight: 900;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    background-color: rgb(0, 0, 0);
+    border: 0;
+    padding: 0.2rem 0.4rem;
+    justify-self: end;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+
+ .star.active {
+    background-color: rgb(60, 62, 62);
+  }
