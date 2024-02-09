@@ -1,0 +1,38 @@
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  border: 0;
+  border-radius: 5px;
+  padding: 4rem 0rem;
+  background-color: rgb(124, 58, 223);
+  margin-top: 10rem;
+}
+
+.title,
+.minititle {
+  color: var(--white);
+}
+
+.welcome svg {
+  max-height: 400px;
+}
+
+.foryou {
+  color: var(--white);
+  background-color: rgb(0, 0, 0);
+  border-radius: 7px;
+  border: 0;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 1rem 1.7rem;
+  transition: 0.2s;
+}
+
+.foryou:hover {
+  cursor: pointer;
+  transition: 0.2s;
+  transform: scale(1.1);
+}
