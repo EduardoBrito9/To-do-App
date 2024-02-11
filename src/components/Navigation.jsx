@@ -6,8 +6,8 @@ const Navigation = () => {
   return (
     <div className={styles.navigation}>
     <ul className={styles.links}>
-      <li><Link to="/important">Importants</Link></li>
-      <li><Link to='/'>Home</Link></li>
+      <li><Link to="/important" className={styles.navli}>Importants</Link></li>
+      <li><Link to='/home' className={styles.navli}>Home</Link></li>
     </ul>
   </div>
   )

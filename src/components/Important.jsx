@@ -21,17 +21,16 @@ const Important = ({
   }, [importants]);
 
   return (
-    <section>
-      <AddTaske
-        task={task}
-        setTask={setTask}
-        setAllTask={setAllTask}
-        allTask={allTask}
-        tasksWhatever={storage}
-        setImportants={setImportants}
-        importants={importants}
-      />
-    </section>
+    <AddTaske
+      task={task}
+      setTask={setTask}
+      setAllTask={setAllTask}
+      allTask={allTask}
+      tasksWhatever={storage}
+      setImportants={setImportants}
+      importants={importants}
+      state={true}
+    />
   );
 };
 

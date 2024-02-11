@@ -14,6 +14,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+    <section className="container">
       <Routes>
         <Route path="/" element={<StartPage/>}/> 
         <Route
@@ -43,6 +44,7 @@ const App = () => {
           }
         />
       </Routes>
+      </section>
     </BrowserRouter>
   );
 };

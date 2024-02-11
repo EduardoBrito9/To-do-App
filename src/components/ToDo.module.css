@@ -1,22 +1,11 @@
-
-
 .containerGlobal {
   display: flex;
-  border: 1px solid var(--white);
-  padding: 2rem;
+  gap: 2rem;
+  padding: 4rem 2rem;
 }
-
-
 
 .todo {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding: 2rem;
-  width: 596px;
 }
-
-
-
-
-

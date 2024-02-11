@@ -12,7 +12,8 @@ const AddTaske = ({
   allTask,
   importants,
   setImportants,
-  tasksWhatever
+  tasksWhatever,
+  state,
 }) => {
   const [save, setSave] = React.useState([]);
   const [store, setStore] = React.useState([]);
@@ -21,7 +22,6 @@ const AddTaske = ({
 
   function addTask(event) {
     event.preventDefault();
-
     if (
       jsonP &&
       !JSON.parse(localStorage.getItem("storage")).includes(task) &&
@@ -43,18 +43,34 @@ const AddTaske = ({
     const arrayTemp = [...array];
     const parsed = JSON.stringify(arrayTemp);
     localStorage.setItem("storage", parsed);
+    setTask("");
+    if (state) {
+      const arrayim = localStorage.getItem("importantTask")
+        ? JSON.parse(localStorage.getItem("importantTask"))
+        : [];
+      arrayim.push(task);
+      setSave(arrayim);
+      const arrayImpTemp = [...arrayim];
+      const parsedImp = JSON.stringify(arrayImpTemp);
+      localStorage.setItem("importantTask", parsedImp);
+      setTask("");
+    }
   }
 
   React.useEffect(() => {
-    if (localStorage.getItem("storage")) {
+    if (
+      localStorage.getItem("storage") ||
+      localStorage.getItem("importantTask")
+    ) {
+      setImportants(JSON.parse(localStorage.getItem("importantTask")));
       setAllTask(JSON.parse(localStorage.getItem("storage")));
     }
-  }, [save, setAllTask]);
+  }, [save, setAllTask, setImportants]);
 
   return (
-    <section className={styles.containerGlobal}>
+    <section className={styles2.containerGlobal}>
+      <Navigation />
       <div className={styles2.todo}>
-        <Navigation />
         <form onSubmit={addTask}>
           <div className={styles.add}>
             <input
@@ -70,14 +86,15 @@ const AddTaske = ({
             </button>
           </div>
         </form>
+        <Tasks
+          tasksWhatever={tasksWhatever}
+          allTask={allTask}
+          setImportants={setImportants}
+          setAllTask={setAllTask}
+          importants={importants}
+          state={state}
+        />
       </div>
-      <Tasks
-        tasksWhatever={tasksWhatever}
-        allTask={allTask}
-        setImportants={setImportants}
-        setAllTask={setAllTask}
-        importants={importants}
-      />
     </section>
   );
 };
