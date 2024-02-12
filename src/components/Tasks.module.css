@@ -3,6 +3,25 @@
   color: white;
   flex-direction: column;
   gap: 1rem;
+  padding-left: 1rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.tasks::-webkit-scrollbar {
+  width: 2px;
+}
+
+.tasks::-webkit-scrollbar-track {
+  background:transparent;
+}
+
+.tasks::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.tasks::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .taskUser {
@@ -55,6 +74,7 @@ input[type="checkbox"]:checked:after {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  animation: anime 0.6s forwards;
 }
 
 .taskdid p {
@@ -96,4 +116,12 @@ input[type="checkbox"]:checked:after {
   cursor: pointer;
 }
 
-
+@keyframes anime {
+  from {
+    transform: translateX(100px);
+    opacity: 0.6;
+  }
+  to {
+    opacity: initial;
+  }
+}

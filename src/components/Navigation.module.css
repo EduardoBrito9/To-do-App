@@ -2,6 +2,7 @@
   border-radius: 5px;
   background-color: rgb(40, 40, 40);
   padding: 2rem;
+  max-height: 400px;
 }
 
 .links {

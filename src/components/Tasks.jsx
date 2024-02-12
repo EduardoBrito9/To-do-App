@@ -10,6 +10,9 @@ const Tasks = ({
   setAllTask,
   tasksWhatever,
   state,
+  setModal,
+  sure,
+  setInx
 }) => {
   const [save, setSave] = React.useState([]);
 
@@ -43,25 +46,12 @@ const Tasks = ({
     console.log(save);
   }, [save]);
 
-  function deleteTask(index) {
-    const impLocal = JSON.parse(localStorage.getItem("importantTask"));
-    const localSto = localStorage.getItem("storage");
-    if (impLocal && impLocal.includes(allTask[index])) {
-      const indexToRemove = impLocal.indexOf(allTask[index]);
-      impLocal.splice(indexToRemove, 1);
-      setImportants(impLocal);
-      const become = JSON.stringify(impLocal);
-      localStorage.setItem("importantTask", become);
-    }
-
-    if (localSto) {
-      const ars = JSON.parse(localSto);
-      ars.splice(index, 1);
-      const turningSto = JSON.stringify(ars);
-      localStorage.setItem("storage", turningSto);
-      setAllTask(ars);
-    }
+  function verification(index) {
+    setModal(true);
+    setInx(index);
   }
+
+
 
   if (!tasksWhatever) return <div>Any important task was found</div>;
   if (tasksWhatever)
@@ -88,7 +78,7 @@ const Tasks = ({
                   ✰
                 </button>
                 <button
-                  onClick={() => deleteTask(index)}
+                  onClick={() => verification(index)}
                   className={styles.delete}
                 >
                   X
@@ -112,7 +102,10 @@ const Tasks = ({
                   ✰
                 </button>
                 <button
-                  onClick={() => deleteTask(index)}
+                  onClick={() => {
+                    verification(index);
+                  
+                  }}
                   className={styles.delete}
                 >
                   X

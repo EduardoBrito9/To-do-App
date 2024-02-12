@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./addTaske.module.css";
-import { json } from "react-router-dom";
+
 import Navigation from "./Navigation";
-import styles2 from "./ToDo.module.css";
+
 import Tasks from "./Tasks";
 
 const AddTaske = ({
@@ -17,8 +17,38 @@ const AddTaske = ({
 }) => {
   const [save, setSave] = React.useState([]);
   const [store, setStore] = React.useState([]);
-
+  const data = new Date();
   const jsonP = JSON.parse(localStorage.getItem("storage"));
+  const [modal, setModal] = React.useState(false);
+  const [sure, setSure] = React.useState(false);
+  const [inx, setInx] = React.useState(null);
+
+  const months = [
+    "Janeiro",
+    "Fevereiro",
+    "Marco",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+  const days = [
+    "Domingo",
+    "Segunda",
+    "Terca",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sabado",
+  ];
+  const month = data.getMonth();
+  const day = data.getDay();
+  const numberDay = data.getDate();
 
   function addTask(event) {
     event.preventDefault();
@@ -67,11 +97,68 @@ const AddTaske = ({
     }
   }, [save, setAllTask, setImportants]);
 
+  function confirmation() {
+    setModal(false);
+    deleteTask(inx);
+  }
+
+  function deleteTask(index) {
+    const impLocal = JSON.parse(localStorage.getItem("importantTask"));
+    const localSto = localStorage.getItem("storage");
+    if (impLocal && impLocal.includes(allTask[index])) {
+      const indexToRemove = impLocal.indexOf(allTask[index]);
+      impLocal.splice(indexToRemove, 1);
+      setImportants(impLocal);
+      const become = JSON.stringify(impLocal);
+      localStorage.setItem("importantTask", become);
+    }
+
+    if (localSto) {
+      const ars = JSON.parse(localSto);
+      ars.splice(index, 1);
+      const turningSto = JSON.stringify(ars);
+      localStorage.setItem("storage", turningSto);
+      setAllTask(ars);
+    }
+  }
+
   return (
-    <section className={styles2.containerGlobal}>
+    <section className={styles.containerGlobal}>
+      {modal && (
+        <div className={styles.modal} style={{ color: "white" }}>
+          <div className={styles.question}>
+            {" "}
+            <h3>Delete task</h3>
+            <span> will be permanently deleted.</span>
+          </div>
+
+          <div className={styles.buttons}>
+            <button onClick={confirmation}>Delete</button>
+            <button className={styles.cancel}>Cancel</button>
+          </div>
+        </div>
+      )}
       <Navigation />
-      <div className={styles2.todo}>
-        <form onSubmit={addTask}>
+      <div className={styles.todo}>
+        <div className={styles.date}>
+          <h1 className={styles.myDay}>My day</h1>
+          <span className={styles.day}>
+            {days[day]}, {months[month]} {numberDay}
+          </span>
+        </div>
+
+        <Tasks
+          tasksWhatever={tasksWhatever}
+          allTask={allTask}
+          setImportants={setImportants}
+          setAllTask={setAllTask}
+          importants={importants}
+          state={state}
+          setModal={setModal}
+          sure={sure}
+          setInx={setInx}
+        />
+        <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>
             <input
               value={task}
@@ -86,14 +173,6 @@ const AddTaske = ({
             </button>
           </div>
         </form>
-        <Tasks
-          tasksWhatever={tasksWhatever}
-          allTask={allTask}
-          setImportants={setImportants}
-          setAllTask={setAllTask}
-          importants={importants}
-          state={state}
-        />
       </div>
     </section>
   );
