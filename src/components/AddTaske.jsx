@@ -14,41 +14,17 @@ const AddTaske = ({
   setImportants,
   tasksWhatever,
   state,
+  days,
+  months,
+  numberDay,
+  title,
 }) => {
   const [save, setSave] = React.useState([]);
   const [store, setStore] = React.useState([]);
-  const data = new Date();
   const jsonP = JSON.parse(localStorage.getItem("storage"));
   const [modal, setModal] = React.useState(false);
   const [sure, setSure] = React.useState(false);
   const [inx, setInx] = React.useState(null);
-
-  const months = [
-    "Janeiro",
-    "Fevereiro",
-    "Marco",
-    "Abril",
-    "Maio",
-    "Junho",
-    "Julho",
-    "Agosto",
-    "Setembro",
-    "Outubro",
-    "Novembro",
-    "Dezembro",
-  ];
-  const days = [
-    "Domingo",
-    "Segunda",
-    "Terca",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sabado",
-  ];
-  const month = data.getMonth();
-  const day = data.getDay();
-  const numberDay = data.getDate();
 
   function addTask(event) {
     event.preventDefault();
@@ -122,6 +98,10 @@ const AddTaske = ({
     }
   }
 
+  function cancel() {
+    setModal(false);
+  }
+
   return (
     <section className={styles.containerGlobal}>
       {modal && (
@@ -134,17 +114,21 @@ const AddTaske = ({
 
           <div className={styles.buttons}>
             <button onClick={confirmation}>Delete</button>
-            <button className={styles.cancel}>Cancel</button>
+            <button onClick={cancel} className={styles.cancel}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
       <Navigation />
       <div className={styles.todo}>
         <div className={styles.date}>
-          <h1 className={styles.myDay}>My day</h1>
-          <span className={styles.day}>
-            {days[day]}, {months[month]} {numberDay}
-          </span>
+          <h1 className={days ? styles.myDay : styles.importantTitle}>{title}</h1>
+          {days && (
+            <span className={styles.day}>
+              {days}, {months} {numberDay}
+            </span>
+          )}
         </div>
 
         <Tasks

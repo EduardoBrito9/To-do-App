@@ -30,6 +30,7 @@ const Important = ({
       setImportants={setImportants}
       importants={importants}
       state={true}
+      title='✰ Important'
     />
   );
 };

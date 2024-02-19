@@ -1,5 +1,4 @@
 import React from "react";
-import Tasks from "./Tasks";
 import AddTaske from "./AddTaske";
 
 const HomeTasks = ({
@@ -20,6 +19,35 @@ const HomeTasks = ({
     }
   }, [importants]);
 
+  const data = new Date();
+
+  const months = [
+    "Janeiro",
+    "Fevereiro",
+    "Marco",
+    "Abril",
+    "Maio",
+    "Junho",
+    "Julho",
+    "Agosto",
+    "Setembro",
+    "Outubro",
+    "Novembro",
+    "Dezembro",
+  ];
+  const days = [
+    "Domingo",
+    "Segunda",
+    "Terca",
+    "Quarta",
+    "Quinta",
+    "Sexta",
+    "Sabado",
+  ];
+  const month = data.getMonth();
+  const day = data.getDay();
+  const numberDay = data.getDate();
+
   return (
     <AddTaske
       task={task}
@@ -29,6 +57,10 @@ const HomeTasks = ({
       tasksWhatever={allTask}
       setImportants={setImportants}
       importants={importants}
+      days = {days[day]}
+      months = {months[month]}
+      numberDay = {numberDay}
+      title = 'My day'
     />
   );
 };

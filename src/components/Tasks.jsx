@@ -4,14 +4,11 @@ import { array } from "prop-types";
 import "../App.css";
 
 const Tasks = ({
-  importants,
   setImportants,
   allTask,
-  setAllTask,
   tasksWhatever,
   state,
   setModal,
-  sure,
   setInx
 }) => {
   const [save, setSave] = React.useState([]);
@@ -72,7 +69,7 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event) => starImportant(event, index)}
+                  onClick={(event, index) => starImportant(event, index)}
                   className={`${styles.star} active`}
                 >
                   ✰
@@ -96,15 +93,14 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event) => starImportant(event, index)}
+                  onClick={(event, index) => starImportant(event, index)}
                   className={`${styles.star} ${state ? `active` : ""} `}
                 >
                   ✰
                 </button>
                 <button
                   onClick={() => {
-                    verification(index);
-                  
+                    verification(index);                 
                   }}
                   className={styles.delete}
                 >
