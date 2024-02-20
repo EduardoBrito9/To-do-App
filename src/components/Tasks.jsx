@@ -9,30 +9,45 @@ const Tasks = ({
   tasksWhatever,
   state,
   setModal,
-  setInx
+  setInx,
 }) => {
   const [save, setSave] = React.useState([]);
 
   function starImportant(event, index) {
     const importantTask = localStorage.getItem("importantTask");
     const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
-
-    if (!importantTask || !arrayImportant.includes(allTask[index])) {
-      arrayImportant.push(allTask[index]);
-      if (!save.includes(allTask[index])) {
+    console.log(index)
+    if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
+      arrayImportant.push(tasksWhatever[index]);
+      if (!save.includes(tasksWhatever[index])) {
         setSave(arrayImportant);
       }
       event.target.classList.add(`active`);
-    } else {
-      const indexToRemove = arrayImportant.indexOf(allTask[index]);
+    } 
+    
+    
+    
+    
+    
+    
+    
+    else {
+      const indexToRemove = arrayImportant.indexOf(tasksWhatever[index]);
       if (indexToRemove !== -1) {
         arrayImportant.splice(indexToRemove, 1);
-        if (!save.includes(allTask[index])) {
+        if (!save.includes(tasksWhatever[index])) {
           setSave(arrayImportant);
         }
         event.target.classList.remove(`active`);
       }
     }
+
+
+
+
+
+
+
 
     setImportants(arrayImportant);
     const arrayTurn = JSON.stringify(arrayImportant);
@@ -47,8 +62,6 @@ const Tasks = ({
     setModal(true);
     setInx(index);
   }
-
-
 
   if (!tasksWhatever) return <div>Any important task was found</div>;
   if (tasksWhatever)
@@ -69,7 +82,7 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event, index) => starImportant(event, index)}
+                  onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} active`}
                 >
                   ✰
@@ -93,14 +106,14 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event, index) => starImportant(event, index)}
+                  onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${state ? `active` : ""} `}
                 >
                   ✰
                 </button>
                 <button
                   onClick={() => {
-                    verification(index);                 
+                    verification(index);
                   }}
                   className={styles.delete}
                 >
