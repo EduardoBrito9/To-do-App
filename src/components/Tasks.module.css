@@ -73,11 +73,12 @@ input[type="checkbox"]:checked:after {
 
 .taskdid {
   display: grid;
-  grid-template-columns: 25px 200px 100px 100px;
+  grid-template-columns: 25px 200px repeat(3, 50px);
   align-items: center;
   justify-content: center;
   gap: 1rem;
   animation: anime 0.6s forwards;
+  line-height: 1.2rem;
 }
 
 .taskdid p {
@@ -87,7 +88,7 @@ input[type="checkbox"]:checked:after {
 }
 
 .delete {
- align-self: flex-end;
+ align-self: center;
   justify-self: start;
   color: rgb(255, 0, 0);
   font-size: 1.3rem;
@@ -105,7 +106,7 @@ input[type="checkbox"]:checked:after {
 }
 
 .star {
-  justify-self: end;
+  justify-self: center;
   color: white;
   font-weight: 900;
   font-size: 1.3rem;
@@ -115,6 +116,20 @@ input[type="checkbox"]:checked:after {
   padding: 0.1rem 0.5rem;
   transition: 0.3s;
   cursor: pointer;
+}
+
+.pencil {
+  background-color: transparent;
+  border: 0;
+  align-self: center;
+  justify-self: end;
+}
+.pencil:hover {
+  cursor: pointer;
+}
+
+.pencil svg{
+  height: 20px;
 }
 
 @keyframes anime {

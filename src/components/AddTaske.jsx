@@ -25,6 +25,9 @@ const AddTaske = ({
   const [modal, setModal] = React.useState(false);
   const [sure, setSure] = React.useState(false);
   const [inx, setInx] = React.useState(null);
+  const [editOn, setEditOn] = React.useState(false);
+  const [actualValue, setActualValue] = React.useState("");
+  const [indexChange, setIndexChange] = React.useState(null);
 
   function addTask(event) {
     event.preventDefault();
@@ -61,6 +64,8 @@ const AddTaske = ({
       localStorage.setItem("importantTask", parsedImp);
       setTask("");
     }
+    deleteTask(indexChange)
+    setEditOn(false)
   }
 
   React.useEffect(() => {
@@ -120,10 +125,26 @@ const AddTaske = ({
           </div>
         </div>
       )}
+      {editOn && (
+        <div className={styles.editingTask}>
+          <input
+            value={actualValue}
+            className={styles.input}
+            type="text"
+            onChange={({ target }) => {
+              setTask(target.value);
+              setActualValue(target.value);
+            }}
+          />
+          <button onClick={add}>Save</button>
+        </div>
+      )}
       <Navigation />
       <div className={styles.todo}>
         <div className={styles.date}>
-          <h1 className={days ? styles.myDay : styles.importantTitle}>{title}</h1>
+          <h1 className={days ? styles.myDay : styles.importantTitle}>
+            {title}
+          </h1>
           {days && (
             <span className={styles.day}>
               {days}, {months} {numberDay}
@@ -141,6 +162,12 @@ const AddTaske = ({
           setModal={setModal}
           sure={sure}
           setInx={setInx}
+          setEditOn={setEditOn}
+          editOn={editOn}
+          actualValue={actualValue}
+          setActualValue={setActualValue}
+          indexChange={indexChange}
+          setIndexChange={setIndexChange}
         />
         <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>

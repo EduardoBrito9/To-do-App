@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Tasks.module.css";
-import { array } from "prop-types";
+import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
 
 const Tasks = ({
@@ -10,28 +10,25 @@ const Tasks = ({
   state,
   setModal,
   setInx,
+  setEditOn,
+  editOn,
+  setActualValue,
+  indexChange,
+  setIndexChange
 }) => {
   const [save, setSave] = React.useState([]);
 
   function starImportant(event, index) {
     const importantTask = localStorage.getItem("importantTask");
     const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
-    console.log(index)
+    console.log(index);
     if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
       arrayImportant.push(tasksWhatever[index]);
       if (!save.includes(tasksWhatever[index])) {
         setSave(arrayImportant);
       }
       event.target.classList.add(`active`);
-    } 
-    
-    
-    
-    
-    
-    
-    
-    else {
+    } else {
       const indexToRemove = arrayImportant.indexOf(tasksWhatever[index]);
       if (indexToRemove !== -1) {
         arrayImportant.splice(indexToRemove, 1);
@@ -41,13 +38,6 @@ const Tasks = ({
         event.target.classList.remove(`active`);
       }
     }
-
-
-
-
-
-
-
 
     setImportants(arrayImportant);
     const arrayTurn = JSON.stringify(arrayImportant);
@@ -63,6 +53,12 @@ const Tasks = ({
     setInx(index);
   }
 
+  function editing(event, index) {
+    setEditOn(!editOn);
+    setActualValue(allTask[index])
+    setIndexChange(index)
+  }
+
   if (!tasksWhatever) return <div>Any important task was found</div>;
   if (tasksWhatever)
     return (
@@ -74,6 +70,7 @@ const Tasks = ({
           ) {
             return (
               <div key={index} className={styles.taskdid}>
+                {editOn && <input type="text" />}
                 <input
                   className={styles.checking}
                   type="checkbox"
@@ -81,6 +78,9 @@ const Tasks = ({
                   id="checking"
                 />{" "}
                 <p>{task}</p>
+                <button className={styles.pencil}>
+                  <EditPencil />
+                </button>
                 <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} active`}
@@ -105,6 +105,12 @@ const Tasks = ({
                   id="checking"
                 />{" "}
                 <p>{task}</p>
+                <button
+                  onClick={(event) => editing(event, index)}
+                  className={styles.pencil}
+                >
+                  <EditPencil />
+                </button>
                 <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${state ? `active` : ""} `}
