@@ -40,7 +40,6 @@
   grid-template-rows: 100px 400px 100px;
   gap: 2rem;
   min-height: 600px;
-
 }
 
 .input {
@@ -71,6 +70,16 @@
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.button.buttonCancel {
+  background: rgb(212, 34, 34);
+}
+
+.button.buttonCancel:hover {
+  background: rgb(255, 88, 88);
+  transition: 0.3s;
 }
 
 .button:hover {
@@ -78,8 +87,6 @@
   transform: translateY(-0px);
   background: rgb(146, 45, 255);
 }
-
-
 
 /*modal*/
 
@@ -100,7 +107,6 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  
 }
 .question h3 {
   font-weight: 600;
@@ -110,7 +116,6 @@
 .question span {
   font-size: 0.8rem;
 }
-
 
 .buttons {
   display: flex;
@@ -136,6 +141,33 @@
 
 /*editingTask*/
 
+.editingTaskContainer {
+  position: absolute;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 92%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .editingTask {
-  
+  position: absolute;
+  left: 5%;
+  top: 25%;
+  display: flex;
+  gap: 1rem;
+  padding: 7rem 4rem;
+  background-color: #0f0f0f;
+  border-radius: 10px;
+  animation: zoomAnime 0.6s forwards;
+}
+
+@keyframes zoomAnime {
+  from {
+    transform: scale(0.6);
+  }
+  to {
+    transform: initial;
+  }
 }

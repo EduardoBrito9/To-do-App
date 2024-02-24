@@ -29,24 +29,24 @@ const AddTaske = ({
   const [actualValue, setActualValue] = React.useState("");
   const [indexChange, setIndexChange] = React.useState(null);
 
-  function addTask(event) {
+  function addTask(event, taskParameterA) {
     event.preventDefault();
     if (
       jsonP &&
-      !JSON.parse(localStorage.getItem("storage")).includes(task) &&
-      task.length
+      !JSON.parse(localStorage.getItem("storage")).includes(taskParameterA) &&
+      taskParameterA.length
     ) {
-      add();
+      add(taskParameterA);
     } else if (!jsonP && task.length) {
-      add();
+      add(taskParameterA);
     }
   }
 
-  function add() {
+  function add(taskParameter) {
     const array = localStorage.getItem("storage")
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
-    array.push(task);
+    array.push(taskParameter);
     setSave(array);
     console.log(array);
     const arrayTemp = [...array];
@@ -57,15 +57,13 @@ const AddTaske = ({
       const arrayim = localStorage.getItem("importantTask")
         ? JSON.parse(localStorage.getItem("importantTask"))
         : [];
-      arrayim.push(task);
+      arrayim.push(taskParameter);
       setSave(arrayim);
       const arrayImpTemp = [...arrayim];
       const parsedImp = JSON.stringify(arrayImpTemp);
       localStorage.setItem("importantTask", parsedImp);
       setTask("");
     }
-    deleteTask(indexChange)
-    setEditOn(false)
   }
 
   React.useEffect(() => {
@@ -79,6 +77,7 @@ const AddTaske = ({
   }, [save, setAllTask, setImportants]);
 
   function confirmation() {
+    add(actualValue);
     setModal(false);
     deleteTask(inx);
   }
@@ -105,6 +104,24 @@ const AddTaske = ({
 
   function cancel() {
     setModal(false);
+    setEditOn(false);
+  }
+
+  function editing() {
+    if (allTask[indexChange] !== actualValue && actualValue.length) {
+      add(actualValue);
+      deleteTask(indexChange);
+      setEditOn(false);
+      setActualValue("");
+    } else {
+      setEditOn(false);
+    }
+  }
+
+  function outside(event) {
+    if (event.target === event.currentTarget) {
+      setEditOn(false);
+    }
   }
 
   return (
@@ -126,17 +143,26 @@ const AddTaske = ({
         </div>
       )}
       {editOn && (
-        <div className={styles.editingTask}>
-          <input
-            value={actualValue}
-            className={styles.input}
-            type="text"
-            onChange={({ target }) => {
-              setTask(target.value);
-              setActualValue(target.value);
-            }}
-          />
-          <button onClick={add}>Save</button>
+        <div onClick={outside} className={styles.editingTaskContainer}>
+          <div className={styles.editingTask}>
+            <input
+              value={actualValue}
+              className={styles.input}
+              type="text"
+              onChange={({ target }) => {
+                setActualValue(target.value);
+              }}
+            />
+            <button className={styles.button} onClick={editing}>
+              Save
+            </button>
+            <button
+              onClick={cancel}
+              className={`${styles.button} ${styles.buttonCancel}`}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
       <Navigation />
@@ -179,7 +205,10 @@ const AddTaske = ({
               }}
               type="text"
             />{" "}
-            <button onClick={addTask} className={styles.button}>
+            <button
+              onClick={(event) => addTask(event, task)}
+              className={styles.button}
+            >
               add
             </button>
           </div>
