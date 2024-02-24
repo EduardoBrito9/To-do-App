@@ -13,15 +13,13 @@ const Tasks = ({
   setEditOn,
   editOn,
   setActualValue,
-  indexChange,
-  setIndexChange
+  setIndexChange,
 }) => {
   const [save, setSave] = React.useState([]);
 
   function starImportant(event, index) {
     const importantTask = localStorage.getItem("importantTask");
     const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
-    console.log(index);
     if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
       arrayImportant.push(tasksWhatever[index]);
       if (!save.includes(tasksWhatever[index])) {
@@ -55,8 +53,8 @@ const Tasks = ({
 
   function editing(event, index) {
     setEditOn(!editOn);
-    setActualValue(allTask[index])
-    setIndexChange(index)
+    setActualValue(allTask[index]);
+    setIndexChange(index);
   }
 
   if (!tasksWhatever) return <div>Any important task was found</div>;
@@ -134,32 +132,3 @@ const Tasks = ({
 };
 
 export default Tasks;
-
-// <div className={styles.tasks}>
-// {tasksWhatever.map((task, index) => {
-//   if (JSON.parse(localStorage.getItem(localStorage.get(''))).includes(task)) {
-//     return (
-//       <div key={index} className={styles.taskdid}>
-//         <input
-//           className={styles.checking}
-//           type="checkbox"
-//           name="checking"
-//           id="checking"
-//         />{" "}
-//         <p>{task}</p>
-//         <button
-//           onClick={(event) => starImportant(event, index)}
-//           className={`${styles.star} ${state ? `active` : ""} `}
-//         >
-//           ✰
-//         </button>
-//         <button onClick={() => deleteTask(index)} className={styles.delete}>
-//           X
-//         </button>
-//       </div>
-//     );
-//   } else {
-//     return null;
-//   }
-// })}
-// </div>

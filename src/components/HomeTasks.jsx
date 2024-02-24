@@ -57,10 +57,10 @@ const HomeTasks = ({
       tasksWhatever={allTask}
       setImportants={setImportants}
       importants={importants}
-      days = {days[day]}
-      months = {months[month]}
-      numberDay = {numberDay}
-      title = 'My day'
+      days={days[day]}
+      months={months[month]}
+      numberDay={numberDay}
+      title="My day"
     />
   );
 };

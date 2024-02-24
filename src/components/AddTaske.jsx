@@ -20,7 +20,6 @@ const AddTaske = ({
   title,
 }) => {
   const [save, setSave] = React.useState([]);
-  const [store, setStore] = React.useState([]);
   const jsonP = JSON.parse(localStorage.getItem("storage"));
   const [modal, setModal] = React.useState(false);
   const [sure, setSure] = React.useState(false);
@@ -29,16 +28,16 @@ const AddTaske = ({
   const [actualValue, setActualValue] = React.useState("");
   const [indexChange, setIndexChange] = React.useState(null);
 
-  function addTask(event, taskParameterA) {
+  function addTask(event, parameter) {
     event.preventDefault();
     if (
       jsonP &&
-      !JSON.parse(localStorage.getItem("storage")).includes(taskParameterA) &&
-      taskParameterA.length
+      !JSON.parse(localStorage.getItem("storage")).includes(parameter) &&
+      parameter.length
     ) {
-      add(taskParameterA);
+      add(parameter);
     } else if (!jsonP && task.length) {
-      add(taskParameterA);
+      add(parameter);
     }
   }
 
@@ -48,7 +47,6 @@ const AddTaske = ({
       : [];
     array.push(taskParameter);
     setSave(array);
-    console.log(array);
     const arrayTemp = [...array];
     const parsed = JSON.stringify(arrayTemp);
     localStorage.setItem("storage", parsed);
@@ -77,7 +75,6 @@ const AddTaske = ({
   }, [save, setAllTask, setImportants]);
 
   function confirmation() {
-    add(actualValue);
     setModal(false);
     deleteTask(inx);
   }
@@ -115,6 +112,7 @@ const AddTaske = ({
       setActualValue("");
     } else {
       setEditOn(false);
+      setActualValue("");
     }
   }
 
@@ -127,7 +125,7 @@ const AddTaske = ({
   return (
     <section className={styles.containerGlobal}>
       {modal && (
-        <div className={styles.modal} style={{ color: "white" }}>
+        <div className={styles.modal}>
           <div className={styles.question}>
             {" "}
             <h3>Delete task</h3>
@@ -192,7 +190,6 @@ const AddTaske = ({
           editOn={editOn}
           actualValue={actualValue}
           setActualValue={setActualValue}
-          indexChange={indexChange}
           setIndexChange={setIndexChange}
         />
         <form onSubmit={addTask} className={styles.forms}>
