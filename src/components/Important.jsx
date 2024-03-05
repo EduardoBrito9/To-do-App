@@ -1,5 +1,4 @@
 import React from "react";
-import Tasks from "./Tasks";
 import AddTaske from "./AddTaske";
 
 const Important = ({

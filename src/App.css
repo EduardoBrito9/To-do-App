@@ -9,13 +9,10 @@ body {
   overflow: hidden;
 }
 
-
-
-
 :root {
   --white: #f9f9f9;
-  --purple:rgb(149, 59, 245);
-  --purpleWhite:rgb(210, 147, 255);
+  --purple: rgb(149, 59, 245);
+  --purpleWhite: rgb(210, 147, 255);
 }
 
 * {
@@ -33,15 +30,11 @@ body {
   border: 3px solid white;
 }
 
-.ToDoAPP  {
+.ToDoAPP {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   padding-bottom: 60px;
-  font-size: 3.5rem; 
+  font-size: 3.5rem;
   color: var(--white);
 }
 
-
-button.active {
-  background-color: rgb(152, 0, 253);
-}

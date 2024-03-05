@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./Tasks.module.css";
 import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
+import Star from '../../images/Star.svg?react'
 
 const Tasks = ({
   setImportants,
@@ -16,6 +17,7 @@ const Tasks = ({
   setIndexChange,
 }) => {
   const [save, setSave] = React.useState([]);
+  const ref = useRef()
 
   function starImportant(event, index) {
     const importantTask = localStorage.getItem("importantTask");
@@ -25,7 +27,7 @@ const Tasks = ({
       if (!save.includes(tasksWhatever[index])) {
         setSave(arrayImportant);
       }
-      event.target.classList.add(`active`);
+      ref.current.classList.add(`${styles.active}`);
     } else {
       const indexToRemove = arrayImportant.indexOf(tasksWhatever[index]);
       if (indexToRemove !== -1) {
@@ -33,7 +35,7 @@ const Tasks = ({
         if (!save.includes(tasksWhatever[index])) {
           setSave(arrayImportant);
         }
-        event.target.classList.remove(`active`);
+        ref.current.classList.remove(`${styles.active}`);
       }
     }
 
@@ -76,21 +78,25 @@ const Tasks = ({
                   id="checking"
                 />{" "}
                 <p>{task}</p>
-                <button className={styles.pencil}>
+                <button
+                  onClick={(event) => editing(event, index)}
+                  className={styles.pencil}
+                >
                   <EditPencil />
                 </button>
                 <button
                   onClick={(event) => starImportant(event, index)}
-                  className={`${styles.star} active`}
+                  className={`${styles.star} ${styles.active}`}
+                  ref={ref}
                 >
-                  ✰
+                  <Star/>
                 </button>
-                <button
+                <i
                   onClick={() => verification(index)}
                   className={styles.delete}
                 >
                   X
-                </button>
+                </i>
               </div>
             );
           } else if (task) {
@@ -111,18 +117,19 @@ const Tasks = ({
                 </button>
                 <button
                   onClick={(event) => starImportant(event, index)}
-                  className={`${styles.star} ${state ? `active` : ""} `}
+                  className={`${styles.star} ${state ? styles.active : ""} `}
+                  ref={ref}
                 >
-                  ✰
+                  <Star/>
                 </button>
-                <button
+                <i
                   onClick={() => {
                     verification(index);
                   }}
                   className={styles.delete}
                 >
                   X
-                </button>
+                </i>
               </div>
             );
           }

@@ -16,7 +16,7 @@
 }
 
 .tasks::-webkit-scrollbar-track {
-  background:transparent;
+  background: transparent;
 }
 
 .tasks::-webkit-scrollbar-thumb {
@@ -79,6 +79,7 @@ input[type="checkbox"]:checked:after {
   gap: 1rem;
   animation: anime 0.6s forwards;
   line-height: 1.2rem;
+  padding: 0.1rem 0.5rem;
 }
 
 .taskdid p {
@@ -88,15 +89,13 @@ input[type="checkbox"]:checked:after {
 }
 
 .delete {
- align-self: center;
+  align-self: center;
   justify-self: start;
   color: rgb(255, 0, 0);
   font-size: 1.3rem;
   font-weight: 900;
-  border-radius: 50%;
-  background-color: transparent;
-  border: 0;
   transition: 0.3s;
+  font-size: 23px;
 }
 
 .delete:hover {
@@ -106,16 +105,20 @@ input[type="checkbox"]:checked:after {
 }
 
 .star {
-  justify-self: center;
-  color: white;
-  font-weight: 900;
-  font-size: 1.3rem;
-  border-radius: 50%;
-  background-color:transparent;
   border: 0;
-  padding: 0.1rem 0.5rem;
-  transition: 0.3s;
-  cursor: pointer;
+  background-color: transparent;
+}
+
+.star svg {
+  height: 20px;
+}
+
+.star.active svg path {
+  fill: rgb(152, 0, 253);
+}
+
+.star svg path {
+  fill: white;
 }
 
 .pencil {
@@ -128,7 +131,7 @@ input[type="checkbox"]:checked:after {
   cursor: pointer;
 }
 
-.pencil svg{
+.pencil svg {
   height: 20px;
 }
 
