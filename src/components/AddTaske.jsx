@@ -27,6 +27,8 @@ const AddTaske = ({
   const [editOn, setEditOn] = React.useState(false);
   const [actualValue, setActualValue] = React.useState("");
   const [indexChange, setIndexChange] = React.useState(null);
+  const [completed, setCompleted] = React.useState([]);
+
 
   function addTask(event, parameter) {
     event.preventDefault();
@@ -42,6 +44,7 @@ const AddTaske = ({
   }
 
   function add(taskParameter) {
+    console.log(' is happening')
     const array = localStorage.getItem("storage")
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
@@ -191,6 +194,8 @@ const AddTaske = ({
           actualValue={actualValue}
           setActualValue={setActualValue}
           setIndexChange={setIndexChange}
+          completed={completed}
+          setCompleted={setCompleted}
         />
         <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>

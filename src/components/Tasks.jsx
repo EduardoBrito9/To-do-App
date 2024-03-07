@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import styles from "./Tasks.module.css";
 import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
-import Star from '../../images/Star.svg?react'
+import Star from "../../images/Star.svg?react";
 
 const Tasks = ({
   setImportants,
@@ -15,9 +15,14 @@ const Tasks = ({
   editOn,
   setActualValue,
   setIndexChange,
+  completed,
+  setCompleted,
 }) => {
   const [save, setSave] = React.useState([]);
-  const ref = useRef()
+  const ref = useRef();
+  const filteredTasks = tasksWhatever.filter(
+    (item) => !completed.includes(item),
+  );
 
   function starImportant(event, index) {
     const importantTask = localStorage.getItem("importantTask");
@@ -59,11 +64,25 @@ const Tasks = ({
     setIndexChange(index);
   }
 
-  if (!tasksWhatever) return <div>Any important task was found</div>;
-  if (tasksWhatever)
+  function completingTasks(index) {
+    if (!completed.includes(tasksWhatever[index])) {
+      setCompleted([...completed, tasksWhatever[index]]);
+    } else {
+      uncompleted(completed.indexOf(tasksWhatever[index]));
+    }
+  }
+
+  function uncompleted(index) {
+    let newArr = [...completed];
+    newArr.splice(index, 1);
+    setCompleted(newArr);
+  }
+
+  if (!filteredTasks) return <div>Any important task was found</div>;
+  if (filteredTasks)
     return (
       <div className={styles.tasks}>
-        {tasksWhatever.map((task, index) => {
+        {filteredTasks.map((task, index) => {
           if (
             localStorage.getItem("importantTask") &&
             JSON.parse(localStorage.getItem("importantTask")).includes(task)
@@ -72,6 +91,9 @@ const Tasks = ({
               <div key={index} className={styles.taskdid}>
                 {editOn && <input type="text" />}
                 <input
+                  onChange={() => {
+                    completingTasks(index);
+                  }}
                   className={styles.checking}
                   type="checkbox"
                   name="checking"
@@ -89,7 +111,7 @@ const Tasks = ({
                   className={`${styles.star} ${styles.active}`}
                   ref={ref}
                 >
-                  <Star/>
+                  <Star />
                 </button>
                 <i
                   onClick={() => verification(index)}
@@ -103,6 +125,9 @@ const Tasks = ({
             return (
               <div key={index} className={styles.taskdid}>
                 <input
+                  onChange={() => {
+                    completingTasks(index);
+                  }}
                   className={styles.checking}
                   type="checkbox"
                   name="checking"
@@ -120,7 +145,7 @@ const Tasks = ({
                   className={`${styles.star} ${state ? styles.active : ""} `}
                   ref={ref}
                 >
-                  <Star/>
+                  <Star />
                 </button>
                 <i
                   onClick={() => {
@@ -134,6 +159,30 @@ const Tasks = ({
             );
           }
         })}
+        {completed && (
+          <div className={styles.completed}>
+            <button>Completed</button>
+            {completed.map((item, index) => {
+              return (
+                <div key={index} className={styles.taskdid}>
+                  <input
+                    className={styles.checking}
+                    type="checkbox"
+                    name="checking"
+                    id="checking"
+                  />{" "}
+                  <p>{item}</p>
+                  <i
+                    onClick={() => verification(index)}
+                    className={styles.delete}
+                  >
+                    X
+                  </i>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     );
 };

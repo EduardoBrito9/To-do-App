@@ -96,6 +96,7 @@ input[type="checkbox"]:checked:after {
   font-weight: 900;
   transition: 0.3s;
   font-size: 23px;
+  grid-column: 5;
 }
 
 .delete:hover {
