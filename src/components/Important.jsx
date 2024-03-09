@@ -8,6 +8,8 @@ const Important = ({
   importants,
   setTask,
   task,
+  tasksWhatever,
+  setTasksWhatever,
 }) => {
   const [storage, setStorage] = React.useState([]);
 
@@ -16,8 +18,9 @@ const Important = ({
       const importantTasks = localStorage.getItem("importantTask");
       const storedTasks = JSON.parse(importantTasks);
       setStorage([...storedTasks]);
+      setTasksWhatever(storage)
     }
-  }, [importants]);
+  }, [importants, setTasksWhatever, storage]);
 
   return (
     <AddTaske
@@ -25,7 +28,7 @@ const Important = ({
       setTask={setTask}
       setAllTask={setAllTask}
       allTask={allTask}
-      tasksWhatever={storage}
+      tasksWhatever={tasksWhatever}
       setImportants={setImportants}
       importants={importants}
       state={true}

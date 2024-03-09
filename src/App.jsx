@@ -11,7 +11,7 @@ const App = () => {
   const [task, setTask] = React.useState("");
 
   const [importants, setImportants] = React.useState([]);
-
+  const [tasksWhatever, setTasksWhatever] = React.useState([])
   return (
     <BrowserRouter>
     <h1 className="ToDoAPP">To do App</h1>
@@ -28,6 +28,8 @@ const App = () => {
               setImportants={setImportants}
               allTask={allTask}
               importants={importants}
+              tasksWhatever={tasksWhatever}
+              setTasksWhatever={setTasksWhatever}
             />
           }
         />
@@ -41,6 +43,8 @@ const App = () => {
               setImportants={setImportants}
               allTask={allTask}
               importants={importants}
+              tasksWhatever={tasksWhatever}
+              setTasksWhatever={setTasksWhatever}
             />
           }
         />

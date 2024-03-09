@@ -8,6 +8,8 @@ const HomeTasks = ({
   importants,
   setTask,
   task,
+  tasksWhatever,
+  setTasksWhatever,
 }) => {
   const [storage, setStorage] = React.useState([]);
 
@@ -18,6 +20,10 @@ const HomeTasks = ({
       setStorage([...storedTasks]);
     }
   }, [importants]);
+
+  React.useEffect(() => {
+    setTasksWhatever(allTask);
+  }, [allTask, setTasksWhatever]);
 
   const data = new Date();
 
@@ -54,7 +60,8 @@ const HomeTasks = ({
       setTask={setTask}
       setAllTask={setAllTask}
       allTask={allTask}
-      tasksWhatever={allTask}
+      tasksWhatever={tasksWhatever}
+      setTasksWhatever={setTasksWhatever}
       setImportants={setImportants}
       importants={importants}
       days={days[day]}

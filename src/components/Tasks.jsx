@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "./Tasks.module.css";
 import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
@@ -8,6 +8,7 @@ const Tasks = ({
   setImportants,
   allTask,
   tasksWhatever,
+  setTaskWhatever,
   state,
   setModal,
   setInx,
@@ -19,12 +20,13 @@ const Tasks = ({
   setCompleted,
 }) => {
   const [save, setSave] = React.useState([]);
-  const ref = useRef();
+
   const filteredTasks = tasksWhatever.filter(
     (item) => !completed.includes(item),
   );
 
   function starImportant(event, index) {
+    console.log(tasksWhatever[index]);
     const importantTask = localStorage.getItem("importantTask");
     const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
     if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
@@ -32,7 +34,7 @@ const Tasks = ({
       if (!save.includes(tasksWhatever[index])) {
         setSave(arrayImportant);
       }
-      ref.current.classList.add(`${styles.active}`);
+      event.target.classList.add(`${styles.active}`);
     } else {
       const indexToRemove = arrayImportant.indexOf(tasksWhatever[index]);
       if (indexToRemove !== -1) {
@@ -40,7 +42,7 @@ const Tasks = ({
         if (!save.includes(tasksWhatever[index])) {
           setSave(arrayImportant);
         }
-        ref.current.classList.remove(`${styles.active}`);
+        event.target.classList.remove(`${styles.active}`);
       }
     }
 
@@ -67,7 +69,7 @@ const Tasks = ({
   function completingTasks(event, index) {
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
-      console.log(index)
+      setTaskWhatever(['oi'])
       event.target.checked = false;
     } else {
       uncompleted(completed.indexOf(tasksWhatever[index]));
@@ -80,10 +82,10 @@ const Tasks = ({
     setCompleted(newArr);
   }
 
-  function unmake(index){
+  function unmake(index) {
     const undo = [...completed];
     undo.splice(index, 1);
-    setCompleted(undo)
+    setCompleted(undo);
   }
 
   if (!filteredTasks) return <div>Any important task was found</div>;
@@ -117,7 +119,6 @@ const Tasks = ({
                 <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${styles.active}`}
-                  ref={ref}
                 >
                   <Star />
                 </button>
@@ -152,7 +153,7 @@ const Tasks = ({
                 <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${state ? styles.active : ""} `}
-                  ref={ref}
+               
                 >
                   <Star />
                 </button>
@@ -175,10 +176,10 @@ const Tasks = ({
               return (
                 <div key={index} className={styles.taskdid}>
                   <input
-                  defaultChecked={true}
-                  onClick={(()=>{
-                    unmake(index)
-                  })}
+                    defaultChecked={true}
+                    onClick={() => {
+                      unmake(index);
+                    }}
                     className={styles.checking}
                     type="checkbox"
                     name="checking"
