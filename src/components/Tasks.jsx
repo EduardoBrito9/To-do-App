@@ -64,9 +64,11 @@ const Tasks = ({
     setIndexChange(index);
   }
 
-  function completingTasks(index) {
+  function completingTasks(event, index) {
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
+      console.log(index)
+      event.target.checked = false;
     } else {
       uncompleted(completed.indexOf(tasksWhatever[index]));
     }
@@ -76,6 +78,12 @@ const Tasks = ({
     let newArr = [...completed];
     newArr.splice(index, 1);
     setCompleted(newArr);
+  }
+
+  function unmake(index){
+    const undo = [...completed];
+    undo.splice(index, 1);
+    setCompleted(undo)
   }
 
   if (!filteredTasks) return <div>Any important task was found</div>;
@@ -91,8 +99,8 @@ const Tasks = ({
               <div key={index} className={styles.taskdid}>
                 {editOn && <input type="text" />}
                 <input
-                  onChange={() => {
-                    completingTasks(index);
+                  onChange={(event) => {
+                    completingTasks(event, index);
                   }}
                   className={styles.checking}
                   type="checkbox"
@@ -125,9 +133,10 @@ const Tasks = ({
             return (
               <div key={index} className={styles.taskdid}>
                 <input
-                  onChange={() => {
-                    completingTasks(index);
+                  onChange={(event) => {
+                    completingTasks(event, index);
                   }}
+                  defaultChecked={false}
                   className={styles.checking}
                   type="checkbox"
                   name="checking"
@@ -166,6 +175,10 @@ const Tasks = ({
               return (
                 <div key={index} className={styles.taskdid}>
                   <input
+                  defaultChecked={true}
+                  onClick={(()=>{
+                    unmake(index)
+                  })}
                     className={styles.checking}
                     type="checkbox"
                     name="checking"
