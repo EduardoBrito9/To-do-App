@@ -8,7 +8,7 @@ const Tasks = ({
   setImportants,
   allTask,
   tasksWhatever,
-  setTaskWhatever,
+  setTasksWhatever,
   state,
   setModal,
   setInx,
@@ -53,7 +53,18 @@ const Tasks = ({
 
   React.useEffect(() => {
     console.log(save);
-  }, [save]);
+    localStorage.setItem('storage', JSON.stringify(tasksWhatever))
+    localStorage.setItem('completed', JSON.stringify(completed));
+  }, [save, tasksWhatever, completed]);
+
+
+  React.useEffect(()=>{
+    if(localStorage.getItem('completed')){
+      setCompleted(JSON.parse(localStorage.getItem('completed')))
+      setTasksWhatever(JSON.parse(localStorage.getItem('storage')))
+    }
+    
+  },[setCompleted, setTasksWhatever])
 
   function verification(index) {
     setModal(true);
@@ -66,15 +77,36 @@ const Tasks = ({
     setIndexChange(index);
   }
 
+
+
+
+
   function completingTasks(event, index) {
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
-      setTaskWhatever(['oi'])
+      const newWhat = [...tasksWhatever]
+      newWhat.splice(index, 1)
+      setTasksWhatever(newWhat)
+      const lsCompleted = localStorage.getItem('completed');
+      const arrayCompleted = lsCompleted ? JSON.parse(lsCompleted) : [];
+      arrayCompleted.push(tasksWhatever[index])
+      localStorage.setItem('completed', JSON.stringify(arrayCompleted))
       event.target.checked = false;
     } else {
+      localStorage.setItem('storage', JSON.stringify(tasksWhatever))
+      localStorage.setItem('completed', JSON.stringify(completed));
       uncompleted(completed.indexOf(tasksWhatever[index]));
     }
   }
+
+
+
+
+
+
+
+
+
 
   function uncompleted(index) {
     let newArr = [...completed];
@@ -82,10 +114,12 @@ const Tasks = ({
     setCompleted(newArr);
   }
 
-  function unmake(index) {
+  function unmake(event, index) {
     const undo = [...completed];
     undo.splice(index, 1);
     setCompleted(undo);
+    setTasksWhatever([...tasksWhatever, completed[index]])
+    event.target.checked = true;
   }
 
   if (!filteredTasks) return <div>Any important task was found</div>;
@@ -177,8 +211,8 @@ const Tasks = ({
                 <div key={index} className={styles.taskdid}>
                   <input
                     defaultChecked={true}
-                    onClick={() => {
-                      unmake(index);
+                    onClick={(event) => {
+                      unmake(event, index);
                     }}
                     className={styles.checking}
                     type="checkbox"

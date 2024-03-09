@@ -12,6 +12,7 @@ const AddTaske = ({
   allTask,
   importants,
   setImportants,
+  setTasksWhatever,
   tasksWhatever,
   state,
   days,
@@ -181,6 +182,7 @@ const AddTaske = ({
 
         <Tasks
           tasksWhatever={tasksWhatever}
+          setTasksWhatever={setTasksWhatever}
           allTask={allTask}
           setImportants={setImportants}
           setAllTask={setAllTask}
