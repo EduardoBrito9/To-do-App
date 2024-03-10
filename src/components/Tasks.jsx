@@ -52,19 +52,14 @@ const Tasks = ({
   }
 
   React.useEffect(() => {
-    console.log(save);
-    localStorage.setItem('storage', JSON.stringify(tasksWhatever))
-    localStorage.setItem('completed', JSON.stringify(completed));
-  }, [save, tasksWhatever, completed]);
-
-
-  React.useEffect(()=>{
-    if(localStorage.getItem('completed')){
-      setCompleted(JSON.parse(localStorage.getItem('completed')))
-      setTasksWhatever(JSON.parse(localStorage.getItem('storage')))
-    }
+  
+      localStorage.setItem("storage", JSON.stringify(tasksWhatever));
     
-  },[setCompleted, setTasksWhatever])
+  }, [tasksWhatever]);
+
+  React.useEffect(() => {
+      localStorage.setItem("completed", JSON.stringify(completed));
+  }, [completed]);
 
   function verification(index) {
     setModal(true);
@@ -77,36 +72,21 @@ const Tasks = ({
     setIndexChange(index);
   }
 
-
-
-
-
   function completingTasks(event, index) {
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
-      const newWhat = [...tasksWhatever]
-      newWhat.splice(index, 1)
-      setTasksWhatever(newWhat)
-      const lsCompleted = localStorage.getItem('completed');
+      const newWhat = [...tasksWhatever];
+      newWhat.splice(index, 1);
+      setTasksWhatever(newWhat);
+      const lsCompleted = localStorage.getItem("completed");
       const arrayCompleted = lsCompleted ? JSON.parse(lsCompleted) : [];
-      arrayCompleted.push(tasksWhatever[index])
-      localStorage.setItem('completed', JSON.stringify(arrayCompleted))
+      arrayCompleted.push(tasksWhatever[index]);
+      localStorage.setItem("completed", JSON.stringify(arrayCompleted));
       event.target.checked = false;
     } else {
-      localStorage.setItem('storage', JSON.stringify(tasksWhatever))
-      localStorage.setItem('completed', JSON.stringify(completed));
       uncompleted(completed.indexOf(tasksWhatever[index]));
     }
   }
-
-
-
-
-
-
-
-
-
 
   function uncompleted(index) {
     let newArr = [...completed];
@@ -118,9 +98,13 @@ const Tasks = ({
     const undo = [...completed];
     undo.splice(index, 1);
     setCompleted(undo);
-    setTasksWhatever([...tasksWhatever, completed[index]])
+    setTasksWhatever([...tasksWhatever, completed[index]]);
     event.target.checked = true;
   }
+
+  React.useEffect(() => {
+    setCompleted(JSON.parse(localStorage.getItem("completed")));
+  }, [setCompleted]);
 
   if (!filteredTasks) return <div>Any important task was found</div>;
   if (filteredTasks)
@@ -187,7 +171,6 @@ const Tasks = ({
                 <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${state ? styles.active : ""} `}
-               
                 >
                   <Star />
                 </button>
