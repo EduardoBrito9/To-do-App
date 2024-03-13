@@ -16,11 +16,14 @@ const Important = ({
   React.useEffect(() => {
     if (localStorage.getItem("importantTask")) {
       const importantTasks = localStorage.getItem("importantTask");
-      const storedTasks = JSON.parse(importantTasks);
+      const completeds  = JSON.parse(localStorage.getItem('completed'))
+      const storedTasks = JSON.parse(importantTasks).filter((item)=>(
+        !completeds.includes(item)
+      ));
       setStorage([...storedTasks]);
-      setTasksWhatever(storage)
+      setTasksWhatever([...storedTasks])
     }
-  }, [importants, setTasksWhatever, storage]);
+  }, [importants, setTasksWhatever]);
 
   return (
     <AddTaske

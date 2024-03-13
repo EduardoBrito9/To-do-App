@@ -52,14 +52,38 @@ const Tasks = ({
   }
 
   React.useEffect(() => {
-  
+    const storedTasks = localStorage.getItem("storage");
+    if (storedTasks) {
+      const parsedTasks = JSON.parse(storedTasks);
+      const updatedTasks = [...parsedTasks, ...tasksWhatever];
+
+      const cleanedArray = updatedTasks.filter(
+        (item, index, array) =>
+          array.indexOf(item) === index && !completed.includes(item),
+      );
+
+      localStorage.setItem("storage", JSON.stringify(cleanedArray));
+    } else {
       localStorage.setItem("storage", JSON.stringify(tasksWhatever));
-    
-  }, [tasksWhatever]);
+    }
+  }, [tasksWhatever, completed]);
 
   React.useEffect(() => {
+    const completedTasks = localStorage.getItem("completed");
+    if (completedTasks) {
+      const parsedTasks = JSON.parse(completedTasks);
+      const updatedTasks = [...parsedTasks, ...completed];
+
+      const cleanedArray = updatedTasks.filter(
+        (item, index, array) =>
+          array.indexOf(item) === index && !tasksWhatever.includes(item),
+      );
+
+      localStorage.setItem("completed", JSON.stringify(cleanedArray));
+    } else {
       localStorage.setItem("completed", JSON.stringify(completed));
-  }, [completed]);
+    }
+  }, [completed, tasksWhatever]);
 
   function verification(index) {
     setModal(true);
@@ -73,6 +97,14 @@ const Tasks = ({
   }
 
   function completingTasks(event, index) {
+    const lsImportants = JSON.parse(localStorage.getItem("importantTask"));
+
+    if (lsImportants && lsImportants.includes(tasksWhatever[index])) {
+      const newImp = [...lsImportants];
+      newImp.splice(index, 1);
+      localStorage.setItem("importantTask", JSON.stringify(newImp));
+    }
+
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
       const newWhat = [...tasksWhatever];
@@ -116,7 +148,7 @@ const Tasks = ({
             JSON.parse(localStorage.getItem("importantTask")).includes(task)
           ) {
             return (
-              <div key={index} className={styles.taskdid}>
+              <div key={`${index} taskImportant`} className={styles.taskdid}>
                 {editOn && <input type="text" />}
                 <input
                   onChange={(event) => {
@@ -150,7 +182,7 @@ const Tasks = ({
             );
           } else if (task) {
             return (
-              <div key={index} className={styles.taskdid}>
+              <div key={`${index} taskNormal`} className={styles.taskdid}>
                 <input
                   onChange={(event) => {
                     completingTasks(event, index);
@@ -186,12 +218,12 @@ const Tasks = ({
             );
           }
         })}
-        {completed && (
+        {completed && window.location.pathname !== "/important" && (
           <div className={styles.completed}>
             <button>Completed</button>
             {completed.map((item, index) => {
               return (
-                <div key={index} className={styles.taskdid}>
+                <div key={`${index}taskCompleted`} className={styles.taskdid}>
                   <input
                     defaultChecked={true}
                     onClick={(event) => {
