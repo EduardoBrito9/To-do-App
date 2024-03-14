@@ -30,7 +30,6 @@ const AddTaske = ({
   const [indexChange, setIndexChange] = React.useState(null);
   const [completed, setCompleted] = React.useState([]);
 
-
   function addTask(event, parameter) {
     event.preventDefault();
     if (
@@ -45,7 +44,7 @@ const AddTaske = ({
   }
 
   function add(taskParameter) {
-    console.log(' is happening')
+    console.log(" is happening");
     const array = localStorage.getItem("storage")
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
@@ -86,6 +85,8 @@ const AddTaske = ({
   function deleteTask(index) {
     const impLocal = JSON.parse(localStorage.getItem("importantTask"));
     const localSto = localStorage.getItem("storage");
+    const completedSto = JSON.parse(localStorage.getItem("completed"));
+
     if (impLocal && impLocal.includes(allTask[index])) {
       const indexToRemove = impLocal.indexOf(allTask[index]);
       impLocal.splice(indexToRemove, 1);
@@ -100,6 +101,16 @@ const AddTaske = ({
       const turningSto = JSON.stringify(ars);
       localStorage.setItem("storage", turningSto);
       setAllTask(ars);
+    }
+    console.log(completedSto)
+
+    if (completedSto) {
+      const indexToRemove = completedSto.indexOf(allTask[index]);
+      console.log('oi daqui')
+      completedSto.splice(indexToRemove, 1);
+      setCompleted(completedSto);
+      const become = JSON.stringify(completedSto);
+      localStorage.setItem("completed", become);
     }
   }
 

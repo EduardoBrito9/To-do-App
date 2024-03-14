@@ -88,6 +88,7 @@ const Tasks = ({
   function verification(index) {
     setModal(true);
     setInx(index);
+    console.log(index);
   }
 
   function editing(event, index) {
@@ -97,14 +98,6 @@ const Tasks = ({
   }
 
   function completingTasks(event, index) {
-    const lsImportants = JSON.parse(localStorage.getItem("importantTask"));
-
-    if (lsImportants && lsImportants.includes(tasksWhatever[index])) {
-      const newImp = [...lsImportants];
-      newImp.splice(index, 1);
-      localStorage.setItem("importantTask", JSON.stringify(newImp));
-    }
-
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
       const newWhat = [...tasksWhatever];
