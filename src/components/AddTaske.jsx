@@ -82,35 +82,31 @@ const AddTaske = ({
     deleteTask(inx);
   }
 
-  function deleteTask(index) {
+  function deleteTask(task) {
     const impLocal = JSON.parse(localStorage.getItem("importantTask"));
     const localSto = localStorage.getItem("storage");
     const completedSto = JSON.parse(localStorage.getItem("completed"));
 
-    if (impLocal && impLocal.includes(allTask[index])) {
-      const indexToRemove = impLocal.indexOf(allTask[index]);
-      impLocal.splice(indexToRemove, 1);
-      setImportants(impLocal);
-      const become = JSON.stringify(impLocal);
-      localStorage.setItem("importantTask", become);
-    }
-
-    if (localSto) {
+    if (localSto && localSto.includes(task)) {
       const ars = JSON.parse(localSto);
-      ars.splice(index, 1);
+      const indexof = ars.indexOf(task);
+      ars.splice(indexof, 1);
       const turningSto = JSON.stringify(ars);
       localStorage.setItem("storage", turningSto);
       setAllTask(ars);
-    }
-    console.log(completedSto)
-
-    if (completedSto) {
-      const indexToRemove = completedSto.indexOf(allTask[index]);
-      console.log('oi daqui')
+    } else {
+      const indexToRemove = completedSto.indexOf(task);
       completedSto.splice(indexToRemove, 1);
       setCompleted(completedSto);
       const become = JSON.stringify(completedSto);
       localStorage.setItem("completed", become);
+    }
+    if (impLocal && impLocal.includes(task)) {
+      const indexToRemove = impLocal.indexOf(task);
+      impLocal.splice(indexToRemove, 1);
+      setImportants(impLocal);
+      const become = JSON.stringify(impLocal);
+      localStorage.setItem("importantTask", become);
     }
   }
 

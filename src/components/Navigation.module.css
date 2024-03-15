@@ -13,13 +13,20 @@
 
 .navli {
   font-size: 0.98rem;
-  padding: 10px;
   border-radius: 10px;
   color: white;
   transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .navli:hover {
   background-color: rgb(74, 74, 74);
   transition: 0.3s;
+}
+
+.navli svg {
+  height: 20px;
+  width: 20px;
 }

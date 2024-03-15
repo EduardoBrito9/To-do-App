@@ -2,13 +2,12 @@
   display: flex;
   color: white;
   flex-direction: column;
-  gap: 1rem;
-  padding-left: 1rem;
-  border: 1px solid var(--white);
+  gap: 0.3rem;
   width: 450px;
-  padding: 2rem 3rem 2rem 3rem;
+  padding-right: 6em;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .tasks::-webkit-scrollbar {
@@ -50,6 +49,7 @@ input[type="checkbox"] {
   justify-content: center;
   align-items: center;
   transition: 0.3s;
+  margin-left: 10px;
 }
 
 input[type="checkbox"]:hover {
@@ -79,7 +79,8 @@ input[type="checkbox"]:checked:after {
   gap: 1rem;
   animation: anime 0.6s forwards;
   line-height: 1.2rem;
-  padding: 0.1rem 0.5rem;
+  padding: 1rem;
+  background-color: var(--blackback);
 }
 
 .taskdid p {
@@ -144,4 +145,45 @@ input[type="checkbox"]:checked:after {
   to {
     opacity: initial;
   }
+}
+
+/*completed*/
+
+.completed {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.openCompleted {
+  background-color: var(--blackback);
+  color: var(--white);
+  max-width: fit-content;
+  padding: 10px;
+  border: 0px;
+  margin: 0.6rem 0rem 0.2rem 0rem;
+}
+
+.completed div {
+  padding: 1rem;
+  background-color: var(--blackback);
+}
+
+.completed div p {
+  color: var(--blackp);
+}
+
+.risk {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  padding: 0 !important;
+}
+.risk::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 100%;
+  border-top: 2px solid var(--blackp);
 }

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./Tasks.module.css";
 import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
 import Star from "../../images/Star.svg?react";
+
 
 const Tasks = ({
   setImportants,
@@ -20,10 +21,10 @@ const Tasks = ({
   setCompleted,
 }) => {
   const [save, setSave] = React.useState([]);
-
   const filteredTasks = tasksWhatever.filter(
     (item) => !completed.includes(item),
   );
+
 
   function starImportant(event, index) {
     console.log(tasksWhatever[index]);
@@ -85,10 +86,9 @@ const Tasks = ({
     }
   }, [completed, tasksWhatever]);
 
-  function verification(index) {
+  function verification(task) {
     setModal(true);
-    setInx(index);
-    console.log(index);
+    setInx(task);
   }
 
   function editing(event, index) {
@@ -165,10 +165,7 @@ const Tasks = ({
                 >
                   <Star />
                 </button>
-                <i
-                  onClick={() => verification(index)}
-                  className={styles.delete}
-                >
+                <i onClick={() => verification(task)} className={styles.delete}>
                   X
                 </i>
               </div>
@@ -201,7 +198,7 @@ const Tasks = ({
                 </button>
                 <i
                   onClick={() => {
-                    verification(index);
+                    verification(task);
                   }}
                   className={styles.delete}
                 >
@@ -213,7 +210,9 @@ const Tasks = ({
         })}
         {completed && window.location.pathname !== "/important" && (
           <div className={styles.completed}>
-            <button>Completed</button>
+            <button className={styles.openCompleted}>
+              Completed {completed.length}
+            </button>
             {completed.map((item, index) => {
               return (
                 <div key={`${index}taskCompleted`} className={styles.taskdid}>
@@ -227,9 +226,12 @@ const Tasks = ({
                     name="checking"
                     id="checking"
                   />{" "}
-                  <p>{item}</p>
+                  <div className={styles.risk}>
+                    {" "}
+                    <p>{item}</p>
+                  </div>
                   <i
-                    onClick={() => verification(index)}
+                    onClick={() => verification(item)}
                     className={styles.delete}
                   >
                     X

@@ -8,11 +8,17 @@ body {
   background-color: #272727;
   overflow-x: hidden;
 }
+html {
+  scroll-behavior: smooth;
+}
+
 
 :root {
   --white: #f9f9f9;
   --purple: rgb(149, 59, 245);
   --purpleWhite: rgb(210, 147, 255);
+  --blackback: rgb(58, 58, 58);
+  --blackp: rgb(128, 125, 125);
 }
 
 * {
