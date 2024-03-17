@@ -32,7 +32,7 @@
 }
 
 .checking {
-  transform: scale(1.5);
+  transform: scale(1.3);
 }
 
 input[type="checkbox"] {
@@ -81,34 +81,19 @@ input[type="checkbox"]:checked:after {
   line-height: 1.2rem;
   padding: 1rem;
   background-color: var(--blackback);
+  border-radius: 4px;
 }
 
 .taskdid p {
-  font-size: 0.9rem;
+  font-size: 0.89rem;
   line-break: anywhere;
   color: var(--white);
-}
-
-.delete {
-  align-self: center;
-  justify-self: start;
-  color: rgb(255, 0, 0);
-  font-size: 1.3rem;
-  font-weight: 900;
-  transition: 0.3s;
-  font-size: 23px;
-  grid-column: 5;
-}
-
-.delete:hover {
-  cursor: pointer;
-  transition: 0.3s;
-  color: rgb(245, 167, 167);
 }
 
 .star {
   border: 0;
   background-color: transparent;
+  grid-column: 5;
 }
 
 .star svg {
@@ -123,19 +108,7 @@ input[type="checkbox"]:checked:after {
   fill: white;
 }
 
-.pencil {
-  background-color: transparent;
-  border: 0;
-  align-self: center;
-  justify-self: end;
-}
-.pencil:hover {
-  cursor: pointer;
-}
 
-.pencil svg {
-  height: 20px;
-}
 
 @keyframes anime {
   from {
@@ -186,4 +159,34 @@ input[type="checkbox"]:checked:after {
   left: 0;
   width: 100%;
   border-top: 2px solid var(--blackp);
+}
+
+/*options*/
+
+.options {
+  position: absolute;
+  bottom: -198px;
+  right: -60px;
+  z-index: 1000;
+  background-color: #333333;
+  border: 1px solid var(--blackp);
+  border-radius: 2px;
+  width: 250px;
+}
+
+.options ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.options ul li {
+  font-size: 0.9rem;
+  padding: 1rem;
+  transition: 0.1s;
+}
+
+.options ul li:hover {
+  background-color: var(--blackp);
+  transition: 0.1s;
+  cursor: pointer;
 }

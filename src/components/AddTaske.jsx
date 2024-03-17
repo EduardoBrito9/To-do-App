@@ -209,6 +209,7 @@ const AddTaske = ({
         <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>
             <input
+            placeholder="Add a task"
               value={task}
               className={styles.input}
               onChange={({ target }) => {

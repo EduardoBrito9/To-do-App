@@ -4,7 +4,6 @@ import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
 import Star from "../../images/Star.svg?react";
 
-
 const Tasks = ({
   setImportants,
   allTask,
@@ -21,10 +20,11 @@ const Tasks = ({
   setCompleted,
 }) => {
   const [save, setSave] = React.useState([]);
+  const [options, setOptions] = React.useState(false);
+
   const filteredTasks = tasksWhatever.filter(
     (item) => !completed.includes(item),
   );
-
 
   function starImportant(event, index) {
     console.log(tasksWhatever[index]);
@@ -91,7 +91,7 @@ const Tasks = ({
     setInx(task);
   }
 
-  function editing(event, index) {
+  function editing(index) {
     setEditOn(!editOn);
     setActualValue(allTask[index]);
     setIndexChange(index);
@@ -131,6 +131,30 @@ const Tasks = ({
     setCompleted(JSON.parse(localStorage.getItem("completed")));
   }, [setCompleted]);
 
+  function divOptions(event, index, task) {
+    event.preventDefault();
+    console.log(event.clientX, index, task);
+    setOptions(!options);
+    return (
+      <div className={styles.options}>
+        <ul>
+          <li>Remove from My Day</li>
+          <li onClick={() => editing(index)}>Edit task</li>
+          <li onClick={(event) => starImportant(event, index)}>
+            Mark as important
+          </li>
+          <li
+            onClick={() => {
+              verification(task);
+            }}
+          >
+            delete
+          </li>
+        </ul>
+      </div>
+    );
+  }
+
   if (!filteredTasks) return <div>Any important task was found</div>;
   if (filteredTasks)
     return (
@@ -141,7 +165,13 @@ const Tasks = ({
             JSON.parse(localStorage.getItem("importantTask")).includes(task)
           ) {
             return (
-              <div key={`${index} taskImportant`} className={styles.taskdid}>
+              <div
+                onContextMenu={(event) => {
+                  divOptions(event, index, task);
+                }}
+                key={`${index} taskImportant`}
+                className={styles.taskdid}
+              >
                 {editOn && <input type="text" />}
                 <input
                   onChange={(event) => {
@@ -154,25 +184,22 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event) => editing(event, index)}
-                  className={styles.pencil}
-                >
-                  <EditPencil />
-                </button>
-                <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${styles.active}`}
                 >
                   <Star />
                 </button>
-                <i onClick={() => verification(task)} className={styles.delete}>
-                  X
-                </i>
               </div>
             );
           } else if (task) {
             return (
-              <div key={`${index} taskNormal`} className={styles.taskdid}>
+              <div
+                onContextMenu={(event) => {
+                  divOptions(event, index, task);
+                }}
+                key={`${index} taskNormal`}
+                className={styles.taskdid}
+              >
                 <input
                   onChange={(event) => {
                     completingTasks(event, index);
@@ -185,25 +212,11 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event) => editing(event, index)}
-                  className={styles.pencil}
-                >
-                  <EditPencil />
-                </button>
-                <button
                   onClick={(event) => starImportant(event, index)}
                   className={`${styles.star} ${state ? styles.active : ""} `}
                 >
                   <Star />
                 </button>
-                <i
-                  onClick={() => {
-                    verification(task);
-                  }}
-                  className={styles.delete}
-                >
-                  X
-                </i>
               </div>
             );
           }
@@ -215,7 +228,13 @@ const Tasks = ({
             </button>
             {completed.map((item, index) => {
               return (
-                <div key={`${index}taskCompleted`} className={styles.taskdid}>
+                <div
+                  onContextMenu={(event) => {
+                    divOptions(event, index, item);
+                  }}
+                  key={`${index}taskCompleted`}
+                  className={styles.taskdid}
+                >
                   <input
                     defaultChecked={true}
                     onClick={(event) => {
@@ -230,12 +249,12 @@ const Tasks = ({
                     {" "}
                     <p>{item}</p>
                   </div>
-                  <i
-                    onClick={() => verification(item)}
-                    className={styles.delete}
+                  <button
+                    onClick={(event) => starImportant(event, index)}
+                    className={`${styles.star} ${state ? styles.active : ""} `}
                   >
-                    X
-                  </i>
+                    <Star />
+                  </button>
                 </div>
               );
             })}
