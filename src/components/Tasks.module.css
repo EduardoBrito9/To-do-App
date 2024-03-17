@@ -82,6 +82,8 @@ input[type="checkbox"]:checked:after {
   padding: 1rem;
   background-color: var(--blackback);
   border-radius: 4px;
+  z-index: 9;
+  position: relative;
 }
 
 .taskdid p {
@@ -165,13 +167,13 @@ input[type="checkbox"]:checked:after {
 
 .options {
   position: absolute;
-  bottom: -198px;
-  right: -60px;
-  z-index: 1000;
+  top: 40px;
+  right: -40px;
   background-color: #333333;
   border: 1px solid var(--blackp);
   border-radius: 2px;
   width: 250px;
+  z-index: 1000;
 }
 
 .options ul {

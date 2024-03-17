@@ -9,11 +9,11 @@ const Navigation = () => {
       <ul className={styles.links}>
         <li>
           <Link to="/home" className={styles.navli}>
-            <Sun /> My day
+            <Sun /> My Day
           </Link>
         </li>
         <li>
-          <Link to="/important" className={styles.navli}>
+          <Link to="/important" className={`${styles.navli} ${styles.star}`}>
            <Starplus /> Importants
           </Link>
         </li>

@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #272727;
+  background-color: #252525;
   overflow-x: hidden;
 }
 html {
@@ -14,6 +14,7 @@ html {
 
 
 :root {
+  --yellow: rgb(211, 207, 0);
   --white: #f1f1f1;
   --purple: rgb(149, 59, 245);
   --purpleWhite: rgb(210, 147, 255);

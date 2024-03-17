@@ -21,13 +21,14 @@ const Tasks = ({
 }) => {
   const [save, setSave] = React.useState([]);
   const [options, setOptions] = React.useState(false);
+  const [optionsTask, setOptionsTask] = React.useState(null);
+
 
   const filteredTasks = tasksWhatever.filter(
     (item) => !completed.includes(item),
   );
 
   function starImportant(event, index) {
-    console.log(tasksWhatever[index]);
     const importantTask = localStorage.getItem("importantTask");
     const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
     if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
@@ -133,26 +134,8 @@ const Tasks = ({
 
   function divOptions(event, index, task) {
     event.preventDefault();
-    console.log(event.clientX, index, task);
     setOptions(!options);
-    return (
-      <div className={styles.options}>
-        <ul>
-          <li>Remove from My Day</li>
-          <li onClick={() => editing(index)}>Edit task</li>
-          <li onClick={(event) => starImportant(event, index)}>
-            Mark as important
-          </li>
-          <li
-            onClick={() => {
-              verification(task);
-            }}
-          >
-            delete
-          </li>
-        </ul>
-      </div>
-    );
+    setOptionsTask(task);
   }
 
   if (!filteredTasks) return <div>Any important task was found</div>;
@@ -189,6 +172,24 @@ const Tasks = ({
                 >
                   <Star />
                 </button>
+                {options && optionsTask === task && (
+                  <div className={styles.options}>
+                    <ul>
+                      <li>Remove from My Day</li>
+                      <li onClick={() => editing(index)}>Edit task</li>
+                      <li onClick={(event) => starImportant(event, index)}>
+                        Mark as important
+                      </li>
+                      <li
+                        onClick={() => {
+                          verification(task);
+                        }}
+                      >
+                        delete
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
             );
           } else if (task) {
@@ -217,11 +218,29 @@ const Tasks = ({
                 >
                   <Star />
                 </button>
+                {options && optionsTask === task && (
+                  <div className={styles.options}>
+                    <ul>
+                      <li>Remove from My Day</li>
+                      <li onClick={() => editing(index)}>Edit task</li>
+                      <li onClick={(event) => starImportant(event, index)}>
+                        Mark as important
+                      </li>
+                      <li
+                        onClick={() => {
+                          verification(task);
+                        }}
+                      >
+                        delete
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </div>
             );
           }
         })}
-        {completed && window.location.pathname !== "/important" && (
+        {completed.length > 0 && window.location.pathname !== "/important" && (
           <div className={styles.completed}>
             <button className={styles.openCompleted}>
               Completed {completed.length}
@@ -255,6 +274,24 @@ const Tasks = ({
                   >
                     <Star />
                   </button>
+                  {options && optionsTask === item && (
+                    <div className={styles.options}>
+                      <ul>
+                        <li>Remove from My Day</li>
+                        <li onClick={() => editing(index)}>Edit task</li>
+                        <li onClick={(event) => starImportant(event, index)}>
+                          Mark as important
+                        </li>
+                        <li
+                          onClick={() => {
+                            verification(item);
+                          }}
+                        >
+                          delete
+                        </li>
+                      </ul>
+                    </div>
+                  )}
                 </div>
               );
             })}

@@ -44,7 +44,6 @@ const AddTaske = ({
   }
 
   function add(taskParameter) {
-    console.log(" is happening");
     const array = localStorage.getItem("storage")
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
