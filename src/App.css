@@ -5,20 +5,20 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #252525;
+  background-color: hsl(240, 10%, 3.9%);
   overflow-x: hidden;
 }
 html {
   scroll-behavior: smooth;
 }
 
-
 :root {
-  --yellow: rgb(211, 207, 0);
-  --white: #f1f1f1;
+  --white: #fafafa;
+  --whitec: rgb(204, 204, 204);
+  --gray: #888888;
   --purple: rgb(149, 59, 245);
   --purpleWhite: rgb(210, 147, 255);
-  --blackback: rgb(58, 58, 58);
+  --blackback: rgb(34, 34, 34);
   --blackp: rgb(128, 125, 125);
 }
 
@@ -32,16 +32,31 @@ html {
 
 .container {
   height: 733px;
-  width: 800px;
+  width: 850px;
   border-radius: 5px;
-  border: 1px solid var(--white);
+  border: 1px solid var(--gray);
 }
 
-.ToDoAPP {
+.titlesPart {
   display: flex;
-  justify-content: center;
-  padding-bottom: 60px;
-  font-size: 3.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.titleTo {
+  display: flex;
+  font-size: 2.5rem;
   color: var(--white);
+}
+
+.create {
+  color: var(--gray);
+}
+ 
+strong {
+  color: var(--whitec);
 }
 

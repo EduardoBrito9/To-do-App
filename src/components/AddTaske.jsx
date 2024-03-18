@@ -1,8 +1,6 @@
 import React from "react";
-import styles from "./addTaske.module.css";
-
+import styles from "./AddTaske.module.css";
 import Navigation from "./Navigation";
-
 import Tasks from "./Tasks";
 
 const AddTaske = ({
@@ -208,7 +206,7 @@ const AddTaske = ({
         <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>
             <input
-            placeholder="Add a task"
+              placeholder="Add a task"
               value={task}
               className={styles.input}
               onChange={({ target }) => {

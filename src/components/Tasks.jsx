@@ -23,7 +23,6 @@ const Tasks = ({
   const [options, setOptions] = React.useState(false);
   const [optionsTask, setOptionsTask] = React.useState(null);
 
-
   const filteredTasks = tasksWhatever.filter(
     (item) => !completed.includes(item),
   );

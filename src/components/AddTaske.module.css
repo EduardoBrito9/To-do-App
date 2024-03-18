@@ -30,13 +30,14 @@
 .myDay {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--white);
+  color: var(--purple);
+  /* color: var(--white); */
 }
 
 .day {
   font-size: 0.89rem;
-  font-weight: 400;
-  color: var(--purple);
+  font-weight: 600;
+  color: var(--gray);
 }
 
 .input {
@@ -58,16 +59,22 @@
 .button {
   font-family: Roboto, sans-serif;
   font-weight: 400;
-  font-size: 14px;
-  color: #fff;
-  background: rgb(48, 48, 48);
-  padding: 10px 30px;
+  font-size: 16px;
+  color: var(--black);
+  background:var(--white);
+  padding: 0px 25px;
   border: 0;
   border-radius: 5px;
   display: flex;
   align-items: center;
   cursor: pointer;
   transition: 0.3s;
+}
+
+.button:hover {
+  transition: 0.4s;
+  transform: translateY(-0px);
+  background: rgb(226, 226, 226);
 }
 
 .button.buttonCancel {
@@ -77,12 +84,6 @@
 .button.buttonCancel:hover {
   background: rgb(255, 88, 88);
   transition: 0.3s;
-}
-
-.button:hover {
-  transition: 0.4s;
-  transform: translateY(-0px);
-  background: rgb(26, 26, 26);
 }
 
 /*modal*/

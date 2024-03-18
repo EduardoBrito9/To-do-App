@@ -1,7 +1,6 @@
 .navigation {
   border-radius: 5px;
-  background-color: rgb(43, 43, 43);
-  padding: 2rem 6rem 2rem 1rem;
+  background-color: rgb(20, 20, 20);
   max-height: 400px;
 }
 
@@ -9,7 +8,6 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  gap: 1.3rem;
 }
 
 .navli {
@@ -18,9 +16,12 @@
   color: white;
   transition: 0.3s;
   display: grid;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: 40px 1fr;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.9rem 8rem 0.9rem 1rem;
 }
 
 .navli:hover {
@@ -34,5 +35,5 @@
 }
 
 .star svg {
-  width: 24px;
+  width: 23px;
 }
