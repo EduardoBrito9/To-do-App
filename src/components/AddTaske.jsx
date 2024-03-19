@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./AddTaske.module.css";
 import Navigation from "./Navigation";
 import Tasks from "./Tasks";
+import {
+  MyContextProvider,
+  MyContext,
+  useMyContext,
+} from "../context/MyContext";
 
-const AddTaske = ({
-  task,
-  setTask,
-  setAllTask,
-  allTask,
-  importants,
-  setImportants,
-  setTasksWhatever,
-  tasksWhatever,
-  state,
-  days,
-  months,
-  numberDay,
-  title,
-}) => {
+const AddTaske = ({ state, days, months, numberDay, title }) => {
+  const {
+    task,
+    setTask,
+    setAllTask,
+    allTask,
+    importants,
+    setImportants,
+    setTasksWhatever,
+    tasksWhatever,
+  } = useMyContext();
+
   const [save, setSave] = React.useState([]);
-  const jsonP = JSON.parse(localStorage.getItem("storage"));
   const [modal, setModal] = React.useState(false);
   const [sure, setSure] = React.useState(false);
   const [inx, setInx] = React.useState(null);
@@ -28,7 +29,8 @@ const AddTaske = ({
   const [indexChange, setIndexChange] = React.useState(null);
   const [completed, setCompleted] = React.useState([]);
 
-  function addTask(event, parameter) {
+  const addTask = (event, parameter) => {
+    const jsonP = JSON.parse(localStorage.getItem("storage"));
     event.preventDefault();
     if (
       jsonP &&
@@ -39,9 +41,9 @@ const AddTaske = ({
     } else if (!jsonP && task.length) {
       add(parameter);
     }
-  }
+  };
 
-  function add(taskParameter) {
+  const add = (taskParameter) => {
     const array = localStorage.getItem("storage")
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
@@ -62,7 +64,7 @@ const AddTaske = ({
       localStorage.setItem("importantTask", parsedImp);
       setTask("");
     }
-  }
+  };
 
   React.useEffect(() => {
     if (
@@ -74,12 +76,12 @@ const AddTaske = ({
     }
   }, [save, setAllTask, setImportants]);
 
-  function confirmation() {
+  const confirmation = () => {
     setModal(false);
     deleteTask(inx);
-  }
+  };
 
-  function deleteTask(task) {
+  const deleteTask = (task) => {
     const impLocal = JSON.parse(localStorage.getItem("importantTask"));
     const localSto = localStorage.getItem("storage");
     const completedSto = JSON.parse(localStorage.getItem("completed"));
@@ -105,14 +107,14 @@ const AddTaske = ({
       const become = JSON.stringify(impLocal);
       localStorage.setItem("importantTask", become);
     }
-  }
+  };
 
-  function cancel() {
+  const cancel = () => {
     setModal(false);
     setEditOn(false);
-  }
+  };
 
-  function editing() {
+  const editing = () => {
     if (allTask[indexChange] !== actualValue && actualValue.length) {
       add(actualValue);
       deleteTask(indexChange);
@@ -122,13 +124,13 @@ const AddTaske = ({
       setEditOn(false);
       setActualValue("");
     }
-  }
+  };
 
-  function outside(event) {
+  const outside = (event) => {
     if (event.target === event.currentTarget) {
       setEditOn(false);
     }
-  }
+  };
 
   return (
     <section className={styles.containerGlobal}>

@@ -27,7 +27,7 @@ const Tasks = ({
     (item) => !completed.includes(item),
   );
 
-  function starImportant(event, index) {
+  const starImportant = (event, index) => {
     const importantTask = localStorage.getItem("importantTask");
     const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
     if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
@@ -50,7 +50,7 @@ const Tasks = ({
     setImportants(arrayImportant);
     const arrayTurn = JSON.stringify(arrayImportant);
     localStorage.setItem("importantTask", arrayTurn);
-  }
+  };
 
   React.useEffect(() => {
     const storedTasks = localStorage.getItem("storage");
@@ -86,18 +86,18 @@ const Tasks = ({
     }
   }, [completed, tasksWhatever]);
 
-  function verification(task) {
+  const verification = (task) => {
     setModal(true);
     setInx(task);
-  }
+  };
 
-  function editing(index) {
+  const editing = (index) => {
     setEditOn(!editOn);
     setActualValue(allTask[index]);
     setIndexChange(index);
-  }
+  };
 
-  function completingTasks(event, index) {
+  const completingTasks = (event, index) => {
     if (!completed.includes(tasksWhatever[index])) {
       setCompleted([...completed, tasksWhatever[index]]);
       const newWhat = [...tasksWhatever];
@@ -111,31 +111,31 @@ const Tasks = ({
     } else {
       uncompleted(completed.indexOf(tasksWhatever[index]));
     }
-  }
+  };
 
-  function uncompleted(index) {
+  const uncompleted = (index) => {
     let newArr = [...completed];
     newArr.splice(index, 1);
     setCompleted(newArr);
-  }
+  };
 
-  function unmake(event, index) {
+  const unmake = (event, index) => {
     const undo = [...completed];
     undo.splice(index, 1);
     setCompleted(undo);
     setTasksWhatever([...tasksWhatever, completed[index]]);
     event.target.checked = true;
-  }
+  };
 
   React.useEffect(() => {
     setCompleted(JSON.parse(localStorage.getItem("completed")));
   }, [setCompleted]);
 
-  function divOptions(event, index, task) {
+  const divOptions = (event, index, task) => {
     event.preventDefault();
     setOptions(!options);
     setOptionsTask(task);
-  }
+  };
 
   if (!filteredTasks) return <div>Any important task was found</div>;
   if (filteredTasks)
