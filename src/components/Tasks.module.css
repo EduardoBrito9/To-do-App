@@ -53,7 +53,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:hover {
-  background-color: var(--purpleWhite);
+  background-color: var(--lightPurple);
   transition: 0.3s;
 }
 
@@ -109,8 +109,6 @@ input[type="checkbox"]:checked:after {
 .star svg path {
   fill: white;
 }
-
-
 
 @keyframes anime {
   from {

@@ -1,16 +1,9 @@
 import React from "react";
 import AddTaske from "./AddTaske";
+import { useMyContext } from "../context/MyContext";
 
-const HomeTasks = ({
-  allTask,
-  setAllTask,
-  setImportants,
-  importants,
-  setTask,
-  task,
-  tasksWhatever,
-  setTasksWhatever,
-}) => {
+const HomeTasks = () => {
+  const { allTask, importants, setTasksWhatever } = useMyContext();
   const [storage, setStorage] = React.useState([]);
 
   React.useEffect(() => {
@@ -56,14 +49,6 @@ const HomeTasks = ({
 
   return (
     <AddTaske
-      task={task}
-      setTask={setTask}
-      setAllTask={setAllTask}
-      allTask={allTask}
-      tasksWhatever={tasksWhatever}
-      setTasksWhatever={setTasksWhatever}
-      setImportants={setImportants}
-      importants={importants}
       days={days[day]}
       months={months[month]}
       numberDay={numberDay}

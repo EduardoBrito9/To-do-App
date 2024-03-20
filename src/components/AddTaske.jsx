@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import styles from "./AddTaske.module.css";
 import Navigation from "./Navigation";
 import Tasks from "./Tasks";
-import {
-  MyContextProvider,
-  MyContext,
-  useMyContext,
-} from "../context/MyContext";
+import { useMyContext } from "../context/MyContext";
 
 const AddTaske = ({ state, days, months, numberDay, title }) => {
   const {
@@ -14,20 +10,20 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     setTask,
     setAllTask,
     allTask,
-    importants,
     setImportants,
-    setTasksWhatever,
-    tasksWhatever,
+    setCompleted,
+    modal,
+    setModal,
+    inx,
+    editOn,
+    setEditOn,
+    actualValue,
+    setActualValue,
+    indexChange,
+    setTasksWhatever
   } = useMyContext();
 
-  const [save, setSave] = React.useState([]);
-  const [modal, setModal] = React.useState(false);
-  const [sure, setSure] = React.useState(false);
-  const [inx, setInx] = React.useState(null);
-  const [editOn, setEditOn] = React.useState(false);
-  const [actualValue, setActualValue] = React.useState("");
-  const [indexChange, setIndexChange] = React.useState(null);
-  const [completed, setCompleted] = React.useState([]);
+  //add task part
 
   const addTask = (event, parameter) => {
     const jsonP = JSON.parse(localStorage.getItem("storage"));
@@ -48,20 +44,20 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
     array.push(taskParameter);
-    setSave(array);
     const arrayTemp = [...array];
     const parsed = JSON.stringify(arrayTemp);
     localStorage.setItem("storage", parsed);
+    setTasksWhatever(arrayTemp)
     setTask("");
     if (state) {
       const arrayim = localStorage.getItem("importantTask")
         ? JSON.parse(localStorage.getItem("importantTask"))
         : [];
       arrayim.push(taskParameter);
-      setSave(arrayim);
-      const arrayImpTemp = [...arrayim];
-      const parsedImp = JSON.stringify(arrayImpTemp);
+      const arrayImp = [...arrayim];
+      const parsedImp = JSON.stringify(arrayImp);
       localStorage.setItem("importantTask", parsedImp);
+      setTasksWhatever(arrayImp)
       setTask("");
     }
   };
@@ -74,7 +70,10 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       setImportants(JSON.parse(localStorage.getItem("importantTask")));
       setAllTask(JSON.parse(localStorage.getItem("storage")));
     }
-  }, [save, setAllTask, setImportants]);
+  }, [setAllTask, setImportants]);
+
+
+  //delete task part
 
   const confirmation = () => {
     setModal(false);
@@ -109,10 +108,14 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     }
   };
 
+  //cancel delete
+
   const cancel = () => {
     setModal(false);
     setEditOn(false);
   };
+
+  //edit task
 
   const editing = () => {
     if (allTask[indexChange] !== actualValue && actualValue.length) {
@@ -125,6 +128,8 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       setActualValue("");
     }
   };
+
+  //outside click modal of edit
 
   const outside = (event) => {
     if (event.target === event.currentTarget) {
@@ -186,25 +191,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
           )}
         </div>
 
-        <Tasks
-          tasksWhatever={tasksWhatever}
-          setTasksWhatever={setTasksWhatever}
-          allTask={allTask}
-          setImportants={setImportants}
-          setAllTask={setAllTask}
-          importants={importants}
-          state={state}
-          setModal={setModal}
-          sure={sure}
-          setInx={setInx}
-          setEditOn={setEditOn}
-          editOn={editOn}
-          actualValue={actualValue}
-          setActualValue={setActualValue}
-          setIndexChange={setIndexChange}
-          completed={completed}
-          setCompleted={setCompleted}
-        />
+        <Tasks state={state} />
         <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>
             <input

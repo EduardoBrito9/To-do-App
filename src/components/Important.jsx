@@ -1,43 +1,25 @@
 import React from "react";
 import AddTaske from "./AddTaske";
+import { useMyContext } from "../context/MyContext";
 
-const Important = ({
-  allTask,
-  setAllTask,
-  setImportants,
-  importants,
-  setTask,
-  task,
-  tasksWhatever,
-  setTasksWhatever,
-}) => {
+const Important = () => {
+  const { importants, setTasksWhatever } = useMyContext();
+
   const [storage, setStorage] = React.useState([]);
 
   React.useEffect(() => {
-    if (localStorage.getItem("importantTask")) {
-      const importantTasks = localStorage.getItem("importantTask");
-      const completeds  = JSON.parse(localStorage.getItem('completed'))
-      const storedTasks = JSON.parse(importantTasks).filter((item)=>(
-        !completeds.includes(item)
-      ));
+    const impBox = localStorage.getItem("importantTask");
+    if (impBox) {
+      const completeds = JSON.parse(localStorage.getItem("completed"));
+      const storedTasks = JSON.parse(impBox).filter(
+        (item) => !completeds.includes(item),
+      );
       setStorage([...storedTasks]);
-      setTasksWhatever([...storedTasks])
+      setTasksWhatever([...storedTasks]);
     }
   }, [importants, setTasksWhatever]);
 
-  return (
-    <AddTaske
-      task={task}
-      setTask={setTask}
-      setAllTask={setAllTask}
-      allTask={allTask}
-      tasksWhatever={tasksWhatever}
-      setImportants={setImportants}
-      importants={importants}
-      state={true}
-      title='✰ Important'
-    />
-  );
+  return <AddTaske state={true} title="✰ Important" />;
 };
 
 export default Important;

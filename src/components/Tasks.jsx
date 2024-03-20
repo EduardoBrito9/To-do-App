@@ -3,47 +3,42 @@ import styles from "./Tasks.module.css";
 import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
 import Star from "../../images/Star.svg?react";
+import { useMyContext } from "../context/MyContext";
 
-const Tasks = ({
-  setImportants,
-  allTask,
-  tasksWhatever,
-  setTasksWhatever,
-  state,
-  setModal,
-  setInx,
-  setEditOn,
-  editOn,
-  setActualValue,
-  setIndexChange,
-  completed,
-  setCompleted,
-}) => {
-  const [save, setSave] = React.useState([]);
+const Tasks = ({ state }) => {
+  const {
+    allTask,
+    setImportants,
+    setTasksWhatever,
+    tasksWhatever,
+    completed,
+    setCompleted,
+    setModal,
+    setInx,
+    editOn,
+    setEditOn,
+    setActualValue,
+    setIndexChange,
+  } = useMyContext();
+
   const [options, setOptions] = React.useState(false);
   const [optionsTask, setOptionsTask] = React.useState(null);
+  const importantTask = JSON.parse(localStorage.getItem("importantTask"));
 
   const filteredTasks = tasksWhatever.filter(
     (item) => !completed.includes(item),
   );
 
-  const starImportant = (event, index) => {
-    const importantTask = localStorage.getItem("importantTask");
-    const arrayImportant = importantTask ? JSON.parse(importantTask) : [];
-    if (!importantTask || !arrayImportant.includes(tasksWhatever[index])) {
-      arrayImportant.push(tasksWhatever[index]);
-      if (!save.includes(tasksWhatever[index])) {
-        setSave(arrayImportant);
-      }
-      event.target.classList.add(`${styles.active}`);
+  const starImportant = (event, taskP) => {
+    const arrayImportant = importantTask ? importantTask : [];
+    if (!importantTask || !arrayImportant.includes(taskP)) {
+      arrayImportant.push(taskP);
+      event.currentTarget.classList.add(`${styles.active}`);
     } else {
-      const indexToRemove = arrayImportant.indexOf(tasksWhatever[index]);
+      const indexToRemove = arrayImportant.indexOf(taskP);
       if (indexToRemove !== -1) {
         arrayImportant.splice(indexToRemove, 1);
-        if (!save.includes(tasksWhatever[index])) {
-          setSave(arrayImportant);
-        }
-        event.target.classList.remove(`${styles.active}`);
+        event.currentTarget.classList.remove(`${styles.active}`);
       }
     }
 
@@ -131,7 +126,7 @@ const Tasks = ({
     setCompleted(JSON.parse(localStorage.getItem("completed")));
   }, [setCompleted]);
 
-  const divOptions = (event, index, task) => {
+  const divOptions = (event, task) => {
     event.preventDefault();
     setOptions(!options);
     setOptionsTask(task);
@@ -149,7 +144,7 @@ const Tasks = ({
             return (
               <div
                 onContextMenu={(event) => {
-                  divOptions(event, index, task);
+                  divOptions(event, task);
                 }}
                 key={`${index} taskImportant`}
                 className={styles.taskdid}
@@ -166,7 +161,7 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event) => starImportant(event, index)}
+                  onClick={(event) => starImportant(event, task)}
                   className={`${styles.star} ${styles.active}`}
                 >
                   <Star />
@@ -176,7 +171,7 @@ const Tasks = ({
                     <ul>
                       <li>Remove from My Day</li>
                       <li onClick={() => editing(index)}>Edit task</li>
-                      <li onClick={(event) => starImportant(event, index)}>
+                      <li onClick={(event) => starImportant(event, task)}>
                         Mark as important
                       </li>
                       <li
@@ -212,8 +207,12 @@ const Tasks = ({
                 />{" "}
                 <p>{task}</p>
                 <button
-                  onClick={(event) => starImportant(event, index)}
-                  className={`${styles.star} ${state ? styles.active : ""} `}
+                  onClick={(event) => starImportant(event, task)}
+                  className={`${styles.star} ${
+                    importantTask && importantTask.includes(task)
+                      ? styles.active
+                      : ""
+                  }`}
                 >
                   <Star />
                 </button>
@@ -222,7 +221,7 @@ const Tasks = ({
                     <ul>
                       <li>Remove from My Day</li>
                       <li onClick={() => editing(index)}>Edit task</li>
-                      <li onClick={(event) => starImportant(event, index)}>
+                      <li onClick={() => starImportant(task)}>
                         Mark as important
                       </li>
                       <li
@@ -268,8 +267,12 @@ const Tasks = ({
                     <p>{item}</p>
                   </div>
                   <button
-                    onClick={(event) => starImportant(event, index)}
-                    className={`${styles.star} ${state ? styles.active : ""} `}
+                    onClick={(event) => starImportant(event, item)}
+                    className={`${styles.star} ${
+                      importantTask && importantTask.includes(item)
+                        ? styles.active
+                        : ""
+                    }`}
                   >
                     <Star />
                   </button>
@@ -278,7 +281,7 @@ const Tasks = ({
                       <ul>
                         <li>Remove from My Day</li>
                         <li onClick={() => editing(index)}>Edit task</li>
-                        <li onClick={(event) => starImportant(event, index)}>
+                        <li onClick={() => starImportant(item)}>
                           Mark as important
                         </li>
                         <li

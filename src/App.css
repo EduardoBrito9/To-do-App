@@ -1,15 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Montserrat:wght@200;300;400;500;600;700;800&display=swap");
 body {
   height: 100vh;
   width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: hsl(240, 10%, 3.9%);
+  background-color: var(--backgroundBlack);
   overflow-x: hidden;
-}
-html {
-  scroll-behavior: smooth;
 }
 
 :root {
@@ -17,9 +13,10 @@ html {
   --whitec: rgb(204, 204, 204);
   --gray: #888888;
   --purple: rgb(149, 59, 245);
-  --purpleWhite: rgb(210, 147, 255);
+  --lightPurple: rgb(210, 147, 255);
   --blackback: rgb(34, 34, 34);
   --blackp: rgb(128, 125, 125);
+  --backgroundBlack: hsl(240, 10%, 3.9%);
 }
 
 * {
@@ -31,7 +28,7 @@ html {
 }
 
 .container {
-  height: 733px;
+  height: 730px;
   width: 850px;
   border-radius: 5px;
   border: 1px solid var(--gray);
@@ -46,8 +43,7 @@ html {
   margin-bottom: 50px;
 }
 
-.titleTo {
-  display: flex;
+.titleApp {
   font-size: 2.5rem;
   color: var(--white);
 }
@@ -55,8 +51,7 @@ html {
 .create {
   color: var(--gray);
 }
- 
+
 strong {
   color: var(--whitec);
 }
-
