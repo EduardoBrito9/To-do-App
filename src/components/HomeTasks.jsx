@@ -48,7 +48,7 @@ const HomeTasks = () => {
   const numberDay = data.getDate();
 
   return (
-    <AddTaske
+    < AddTaske
       days={days[day]}
       months={months[month]}
       numberDay={numberDay}

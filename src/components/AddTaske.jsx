@@ -14,20 +14,20 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     setCompleted,
     modal,
     setModal,
-    inx,
+    indexDelete,
     editOn,
     setEditOn,
     actualValue,
     setActualValue,
     indexChange,
-    setTasksWhatever
+    setTasksWhatever,
   } = useMyContext();
 
   //add task part
 
   const addTask = (event, parameter) => {
+    event.preventDefault()
     const jsonP = JSON.parse(localStorage.getItem("storage"));
-    event.preventDefault();
     if (
       jsonP &&
       !JSON.parse(localStorage.getItem("storage")).includes(parameter) &&
@@ -47,7 +47,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     const arrayTemp = [...array];
     const parsed = JSON.stringify(arrayTemp);
     localStorage.setItem("storage", parsed);
-    setTasksWhatever(arrayTemp)
+    setTasksWhatever(arrayTemp);
     setTask("");
     if (state) {
       const arrayim = localStorage.getItem("importantTask")
@@ -57,11 +57,10 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       const arrayImp = [...arrayim];
       const parsedImp = JSON.stringify(arrayImp);
       localStorage.setItem("importantTask", parsedImp);
-      setTasksWhatever(arrayImp)
+      setTasksWhatever(arrayImp);
       setTask("");
     }
   };
-
   React.useEffect(() => {
     if (
       localStorage.getItem("storage") ||
@@ -72,13 +71,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     }
   }, [setAllTask, setImportants]);
 
-
   //delete task part
-
-  const confirmation = () => {
-    setModal(false);
-    deleteTask(inx);
-  };
 
   const deleteTask = (task) => {
     const impLocal = JSON.parse(localStorage.getItem("importantTask"));
@@ -106,6 +99,13 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       const become = JSON.stringify(impLocal);
       localStorage.setItem("importantTask", become);
     }
+  };
+
+  //confirmation delete
+
+  const confirmation = () => {
+    setModal(false);
+    deleteTask(indexDelete);
   };
 
   //cancel delete
@@ -191,7 +191,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
           )}
         </div>
 
-        <Tasks state={state} />
+        <Tasks />
         <form onSubmit={addTask} className={styles.forms}>
           <div className={styles.add}>
             <input

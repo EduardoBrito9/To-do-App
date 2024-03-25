@@ -9,7 +9,7 @@ const MyContextProvider = ({ children }) => {
   const [tasksWhatever, setTasksWhatever] = React.useState([]);
   const [completed, setCompleted] = React.useState([]);
   const [modal, setModal] = React.useState(false);
-  const [inx, setInx] = React.useState(null);
+  const [indexDelete, setIndexDelete] = React.useState(null);
   const [editOn, setEditOn] = React.useState(false);
   const [actualValue, setActualValue] = React.useState("");
   const [indexChange, setIndexChange] = React.useState(null);
@@ -28,8 +28,8 @@ const MyContextProvider = ({ children }) => {
         setCompleted,
         modal,
         setModal,
-        inx,
-        setInx,
+        indexDelete,
+        setIndexDelete,
         editOn,
         setEditOn,
         actualValue,

@@ -1,11 +1,10 @@
-import React, { useRef } from "react";
+import React from "react";
 import styles from "./Tasks.module.css";
-import EditPencil from "../../images/EditPencil.svg?react";
 import "../App.css";
 import Star from "../../images/Star.svg?react";
 import { useMyContext } from "../context/MyContext";
 
-const Tasks = ({ state }) => {
+const Tasks = () => {
   const {
     allTask,
     setImportants,
@@ -14,7 +13,7 @@ const Tasks = ({ state }) => {
     completed,
     setCompleted,
     setModal,
-    setInx,
+    setIndexDelete,
     editOn,
     setEditOn,
     setActualValue,
@@ -83,7 +82,7 @@ const Tasks = ({ state }) => {
 
   const verification = (task) => {
     setModal(true);
-    setInx(task);
+    setIndexDelete(task);
   };
 
   const editing = (index) => {
@@ -128,7 +127,7 @@ const Tasks = ({ state }) => {
 
   const divOptions = (event, task) => {
     event.preventDefault();
-    setOptions(!options);
+    setOptions(true);
     setOptionsTask(task);
   };
 
