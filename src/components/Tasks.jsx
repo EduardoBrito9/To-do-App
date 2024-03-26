@@ -6,7 +6,6 @@ import { useMyContext } from "../context/MyContext";
 
 const Tasks = () => {
   const {
-    allTask,
     setImportants,
     setTasksWhatever,
     tasksWhatever,
@@ -16,7 +15,7 @@ const Tasks = () => {
     setIndexDelete,
     editOn,
     setEditOn,
-    setActualValue,
+    setCurrentValue,
     setIndexChange,
   } = useMyContext();
 
@@ -87,8 +86,8 @@ const Tasks = () => {
 
   const editing = (index) => {
     setEditOn(!editOn);
-    setActualValue(allTask[index]);
-    setIndexChange(index);
+    setIndexChange(index); //index correto
+    setCurrentValue(tasksWhatever[index]); // task correta
   };
 
   const completingTasks = (event, index) => {
@@ -127,7 +126,7 @@ const Tasks = () => {
 
   const divOptions = (event, task) => {
     event.preventDefault();
-    setOptions(true);
+    setOptions(!options);
     setOptionsTask(task);
   };
 
@@ -189,7 +188,7 @@ const Tasks = () => {
             return (
               <div
                 onContextMenu={(event) => {
-                  divOptions(event, index, task);
+                  divOptions(event, task);
                 }}
                 key={`${index} taskNormal`}
                 className={styles.taskdid}
@@ -246,7 +245,7 @@ const Tasks = () => {
               return (
                 <div
                   onContextMenu={(event) => {
-                    divOptions(event, index, item);
+                    divOptions(event, item);
                   }}
                   key={`${index}taskCompleted`}
                   className={styles.taskdid}
@@ -279,8 +278,8 @@ const Tasks = () => {
                     <div className={styles.options}>
                       <ul>
                         <li>Remove from My Day</li>
-                        <li onClick={() => editing(index)}>Edit task</li>
-                        <li onClick={() => starImportant(item)}>
+
+                        <li onClick={(event) => starImportant(event, item)}>
                           Mark as important
                         </li>
                         <li

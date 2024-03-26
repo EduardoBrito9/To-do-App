@@ -8,8 +8,6 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
   const {
     task,
     setTask,
-    setAllTask,
-    allTask,
     setImportants,
     setCompleted,
     modal,
@@ -17,16 +15,17 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     indexDelete,
     editOn,
     setEditOn,
-    actualValue,
-    setActualValue,
+    currentValue,
+    setCurrentValue,
     indexChange,
+    tasksWhatever,
     setTasksWhatever,
   } = useMyContext();
 
   //add task part
 
   const addTask = (event, parameter) => {
-    event.preventDefault()
+    event.preventDefault();
     const jsonP = JSON.parse(localStorage.getItem("storage"));
     if (
       jsonP &&
@@ -61,30 +60,23 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       setTask("");
     }
   };
-  React.useEffect(() => {
-    if (
-      localStorage.getItem("storage") ||
-      localStorage.getItem("importantTask")
-    ) {
-      setImportants(JSON.parse(localStorage.getItem("importantTask")));
-      setAllTask(JSON.parse(localStorage.getItem("storage")));
-    }
-  }, [setAllTask, setImportants]);
 
   //delete task part
 
   const deleteTask = (task) => {
     const impLocal = JSON.parse(localStorage.getItem("importantTask"));
-    const localSto = localStorage.getItem("storage");
+    const localSto = JSON.parse(localStorage.getItem("storage"));
     const completedSto = JSON.parse(localStorage.getItem("completed"));
 
+    console.log(impLocal, localSto, completedSto);
+
     if (localSto && localSto.includes(task)) {
-      const ars = JSON.parse(localSto);
+      const ars = [...localSto];
       const indexof = ars.indexOf(task);
       ars.splice(indexof, 1);
       const turningSto = JSON.stringify(ars);
       localStorage.setItem("storage", turningSto);
-      setAllTask(ars);
+      setTasksWhatever(ars);
     } else {
       const indexToRemove = completedSto.indexOf(task);
       completedSto.splice(indexToRemove, 1);
@@ -118,14 +110,14 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
   //edit task
 
   const editing = () => {
-    if (allTask[indexChange] !== actualValue && actualValue.length) {
-      add(actualValue);
-      deleteTask(indexChange);
+    if (tasksWhatever[indexChange] !== currentValue && currentValue.length) {
+      deleteTask(tasksWhatever[indexChange]); //only that is wrong
+      add(currentValue);
       setEditOn(false);
-      setActualValue("");
+      setCurrentValue("");
     } else {
       setEditOn(false);
-      setActualValue("");
+      setCurrentValue("");
     }
   };
 
@@ -159,11 +151,11 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
         <div onClick={outside} className={styles.editingTaskContainer}>
           <div className={styles.editingTask}>
             <input
-              value={actualValue}
+              value={currentValue}
               className={styles.input}
               type="text"
               onChange={({ target }) => {
-                setActualValue(target.value);
+                setCurrentValue(target.value);
               }}
             />
             <button className={styles.button} onClick={editing}>

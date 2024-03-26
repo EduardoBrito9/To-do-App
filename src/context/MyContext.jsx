@@ -3,7 +3,6 @@ import React, { createContext, useContext, useState } from "react";
 const MyContext = createContext();
 
 const MyContextProvider = ({ children }) => {
-  const [allTask, setAllTask] = React.useState([]);
   const [task, setTask] = React.useState("");
   const [importants, setImportants] = React.useState([]);
   const [tasksWhatever, setTasksWhatever] = React.useState([]);
@@ -11,13 +10,11 @@ const MyContextProvider = ({ children }) => {
   const [modal, setModal] = React.useState(false);
   const [indexDelete, setIndexDelete] = React.useState(null);
   const [editOn, setEditOn] = React.useState(false);
-  const [actualValue, setActualValue] = React.useState("");
+  const [currentValue, setCurrentValue] = React.useState("");
   const [indexChange, setIndexChange] = React.useState(null);
   return (
     <MyContext.Provider
       value={{
-        allTask,
-        setAllTask,
         task,
         setTask,
         importants,
@@ -32,8 +29,8 @@ const MyContextProvider = ({ children }) => {
         setIndexDelete,
         editOn,
         setEditOn,
-        actualValue,
-        setActualValue,
+        currentValue,
+        setCurrentValue,
         indexChange,
         setIndexChange,
       }}

@@ -7,23 +7,23 @@ React.
 ### Requisitos Funcionais (RFs):
 
 - [ X ] Deve ser possivel adicionar uma tarefa;
-- [ ] Deve ser possivel excluir a tarefa atraves do botao direito do mouse;
+- [ X ] Deve ser possivel excluir a tarefa atraves do botao direito do mouse;
 - [ X ] Deve ser possivel marcar uma tarefa como importante e ela ir para essa sessao;
 - [ X ] Deve ser possivel completar a tarefa e isso ser exposto claramente ao usuario
-- [ ] Deve ser possivel editar as tarefas
+- [ X ] Deve ser possivel editar as tarefas
 - [ ] Ter uma parte em que indica pro usuario comando automatizados para ele conseguir excluir, editar, marcar como importante com apenas 1 click em uma tecla.
 
 ## Regras de Negocio (RNs):
 
-- [ ] Aparecer na sessao de importantes apenas tarefas completadas
-- [ ] Adicionar apenas tarefas unicas
-- [ ] Conseguir editar apenas tarefas que nao estiverem completadas
-- [ ] Conseguir excluir qualquer tarefa
+- [ X ] Aparecer na sessao de importantes apenas tarefas completadas
+- [ X ] Adicionar apenas tarefas unicas
+- [ X ] Conseguir editar apenas tarefas que nao estiverem completadas
+- [ X ] Conseguir excluir qualquer tarefa
 - [ ] ...? feature
 
 ## Requisitos nao Funcionais (RNFs):
 
-- [ ] Usar o localStorage para interagir com as tarefas.
+- [ X ] Usar o localStorage para interagir com as tarefas.
 
 ## Requisitos de codigo
 
@@ -38,4 +38,7 @@ React.
 - [ ] AddTask
 - [ ] Tasks
 - [ X ] Important
-- [ ] HomeTasks 
+- [ X ] HomeTasks 
+
+## Bugs 
+- Quando eu edito uma task o important sai dela.

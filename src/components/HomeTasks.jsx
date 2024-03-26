@@ -3,20 +3,18 @@ import AddTaske from "./AddTaske";
 import { useMyContext } from "../context/MyContext";
 
 const HomeTasks = () => {
-  const { allTask, importants, setTasksWhatever } = useMyContext();
-  const [storage, setStorage] = React.useState([]);
+  const { setImportants, setTasksWhatever } = useMyContext();
 
   React.useEffect(() => {
-    if (localStorage.getItem("importantTask")) {
-      const importantTasks = localStorage.getItem("importantTask");
-      const storedTasks = JSON.parse(importantTasks);
-      setStorage([...storedTasks]);
+    if (
+      localStorage.getItem("storage") ||
+      localStorage.getItem("importantTask")
+    ) {
+      console.log(JSON.parse(localStorage.getItem("storage")));
+      setTasksWhatever(JSON.parse(localStorage.getItem("storage")));
+      setImportants(JSON.parse(localStorage.getItem("importantTask")));
     }
-  }, [importants]);
-
-  React.useEffect(() => {
-    setTasksWhatever(allTask);
-  }, [allTask, setTasksWhatever]);
+  }, [setImportants, setTasksWhatever]);
 
   const data = new Date();
 
@@ -48,7 +46,7 @@ const HomeTasks = () => {
   const numberDay = data.getDate();
 
   return (
-    < AddTaske
+    <AddTaske
       days={days[day]}
       months={months[month]}
       numberDay={numberDay}
