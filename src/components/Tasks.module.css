@@ -4,6 +4,7 @@
   flex-direction: column;
   gap: 0.3rem;
   width: 450px;
+  margin-top: 10px;
   padding-right: 6em;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -77,7 +78,7 @@ input[type="checkbox"]:checked:after {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  animation: anime 0.6s forwards;
+  animation: anime 0.5s forwards;
   line-height: 1.2rem;
   padding: 1rem;
   background-color: var(--blackback);
@@ -112,7 +113,7 @@ input[type="checkbox"]:checked:after {
 
 @keyframes anime {
   from {
-    transform: translateX(100px);
+    transform: translateX(50px);
     opacity: 0.6;
   }
   to {

@@ -46,6 +46,12 @@ const Tasks = () => {
   };
 
   React.useEffect(() => {
+    if (!localStorage.getItem("importantTask")) {
+      localStorage.setItem("importantTask", JSON.stringify([]));
+    }
+  }, []);
+
+  React.useEffect(() => {
     const storedTasks = localStorage.getItem("storage");
     if (storedTasks) {
       const parsedTasks = JSON.parse(storedTasks);
@@ -129,9 +135,8 @@ const Tasks = () => {
     setOptions(!options);
     setOptionsTask(task);
   };
-
   if (!filteredTasks) return <div>Any important task was found</div>;
-  if (filteredTasks)
+  else if (filteredTasks)
     return (
       <div className={styles.tasks}>
         {filteredTasks.map((task, index) => {
@@ -141,10 +146,10 @@ const Tasks = () => {
           ) {
             return (
               <div
+                key={`${task} important`}
                 onContextMenu={(event) => {
                   divOptions(event, task);
                 }}
-                key={`${index} taskImportant`}
                 className={styles.taskdid}
               >
                 {editOn && <input type="text" />}
@@ -155,7 +160,7 @@ const Tasks = () => {
                   className={styles.checking}
                   type="checkbox"
                   name="checking"
-                  id="checking"
+                  id={`${task} important`}
                 />{" "}
                 <p>{task}</p>
                 <button
@@ -187,10 +192,10 @@ const Tasks = () => {
           } else if (task) {
             return (
               <div
+                key={`${task} normalTask`}
                 onContextMenu={(event) => {
                   divOptions(event, task);
                 }}
-                key={`${index} taskNormal`}
                 className={styles.taskdid}
               >
                 <input
@@ -201,7 +206,7 @@ const Tasks = () => {
                   className={styles.checking}
                   type="checkbox"
                   name="checking"
-                  id="checking"
+                  id={`${task} normalTask`}
                 />{" "}
                 <p>{task}</p>
                 <button
@@ -219,7 +224,7 @@ const Tasks = () => {
                     <ul>
                       <li>Remove from My Day</li>
                       <li onClick={() => editing(index)}>Edit task</li>
-                      <li onClick={() => starImportant(task)}>
+                      <li onClick={(event) => starImportant(event, task)}>
                         Mark as important
                       </li>
                       <li
@@ -244,10 +249,10 @@ const Tasks = () => {
             {completed.map((item, index) => {
               return (
                 <div
+                  key={item}
                   onContextMenu={(event) => {
                     divOptions(event, item);
                   }}
-                  key={`${index}taskCompleted`}
                   className={styles.taskdid}
                 >
                   <input
@@ -258,7 +263,7 @@ const Tasks = () => {
                     className={styles.checking}
                     type="checkbox"
                     name="checking"
-                    id="checking"
+                    id={item}
                   />{" "}
                   <div className={styles.risk}>
                     {" "}

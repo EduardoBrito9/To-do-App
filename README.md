@@ -41,4 +41,5 @@ React.
 - [ X ] HomeTasks 
 
 ## Bugs 
-- Quando eu edito uma task o important sai dela.
+
+-

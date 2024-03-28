@@ -5,20 +5,10 @@ import { useMyContext } from "../context/MyContext";
 const HomeTasks = () => {
   const { setImportants, setTasksWhatever } = useMyContext();
 
-  React.useEffect(() => {
-    if (
-      localStorage.getItem("storage") ||
-      localStorage.getItem("importantTask")
-    ) {
-      console.log(JSON.parse(localStorage.getItem("storage")));
-      setTasksWhatever(JSON.parse(localStorage.getItem("storage")));
-      setImportants(JSON.parse(localStorage.getItem("importantTask")));
-    }
-  }, [setImportants, setTasksWhatever]);
-
+  //date
   const data = new Date();
 
-  const months = [
+  const year = [
     "Janeiro",
     "Fevereiro",
     "Marco",
@@ -32,7 +22,7 @@ const HomeTasks = () => {
     "Novembro",
     "Dezembro",
   ];
-  const days = [
+  const week = [
     "Domingo",
     "Segunda",
     "Terca",
@@ -45,12 +35,23 @@ const HomeTasks = () => {
   const day = data.getDay();
   const numberDay = data.getDate();
 
+  React.useEffect(() => {
+    if (
+      localStorage.getItem("storage") ||
+      localStorage.getItem("importantTask")
+    ) {
+      console.log(JSON.parse(localStorage.getItem("storage")));
+      setTasksWhatever(JSON.parse(localStorage.getItem("storage")));
+      setImportants(JSON.parse(localStorage.getItem("importantTask")));
+    }
+  }, [setImportants, setTasksWhatever]);
+
   return (
     <AddTaske
-      days={days[day]}
-      months={months[month]}
-      numberDay={numberDay}
       title="My day"
+      days={week[day]}
+      months={year[month]}
+      numberDay={numberDay}
     />
   );
 };

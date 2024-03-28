@@ -4,8 +4,8 @@ import { useMyContext } from "../context/MyContext";
 
 const Important = () => {
   const { importants, setTasksWhatever } = useMyContext();
+  
 
-  const [storage, setStorage] = React.useState([]);
 
   React.useEffect(() => {
     const impBox = localStorage.getItem("importantTask");
@@ -14,9 +14,8 @@ const Important = () => {
       const storedTasks = JSON.parse(impBox).filter(
         (item) => !completeds.includes(item),
       );
-      setStorage([...storedTasks]);
       setTasksWhatever([...storedTasks]);
-    }
+    } 
   }, [importants, setTasksWhatever]);
 
   return <AddTaske state={true} title="✰ Important" />;

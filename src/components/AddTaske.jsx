@@ -4,7 +4,7 @@ import Navigation from "./Navigation";
 import Tasks from "./Tasks";
 import { useMyContext } from "../context/MyContext";
 
-const AddTaske = ({ state, days, months, numberDay, title }) => {
+const AddTaske = ({ state, title, days, months, numberDay }) => {
   const {
     task,
     setTask,
@@ -24,6 +24,8 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
 
   //add task part
 
+  const impLocal = JSON.parse(localStorage.getItem("importantTask"));
+
   const addTask = (event, parameter) => {
     event.preventDefault();
     const jsonP = JSON.parse(localStorage.getItem("storage"));
@@ -38,7 +40,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     }
   };
 
-  const add = (taskParameter) => {
+  const add = (taskParameter, check) => {
     const array = localStorage.getItem("storage")
       ? JSON.parse(localStorage.getItem("storage"))
       : [];
@@ -48,10 +50,8 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
     localStorage.setItem("storage", parsed);
     setTasksWhatever(arrayTemp);
     setTask("");
-    if (state) {
-      const arrayim = localStorage.getItem("importantTask")
-        ? JSON.parse(localStorage.getItem("importantTask"))
-        : [];
+    if (state || check) {
+      const arrayim = impLocal ? impLocal : [];
       arrayim.push(taskParameter);
       const arrayImp = [...arrayim];
       const parsedImp = JSON.stringify(arrayImp);
@@ -64,7 +64,6 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
   //delete task part
 
   const deleteTask = (task) => {
-    const impLocal = JSON.parse(localStorage.getItem("importantTask"));
     const localSto = JSON.parse(localStorage.getItem("storage"));
     const completedSto = JSON.parse(localStorage.getItem("completed"));
 
@@ -111,8 +110,10 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
 
   const editing = () => {
     if (tasksWhatever[indexChange] !== currentValue && currentValue.length) {
+      if (impLocal && impLocal.includes(tasksWhatever[indexChange])) {
+        add(currentValue, true);
+      } else add(currentValue, false);
       deleteTask(tasksWhatever[indexChange]); //only that is wrong
-      add(currentValue);
       setEditOn(false);
       setCurrentValue("");
     } else {
@@ -139,7 +140,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
             <span> will be permanently deleted.</span>
           </div>
 
-          <div className={styles.buttons}>
+          <div className={styles.buttonsSure}>
             <button onClick={confirmation}>Delete</button>
             <button onClick={cancel} className={styles.cancel}>
               Cancel
@@ -150,23 +151,26 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
       {editOn && (
         <div onClick={outside} className={styles.editingTaskContainer}>
           <div className={styles.editingTask}>
-            <input
-              value={currentValue}
-              className={styles.input}
-              type="text"
-              onChange={({ target }) => {
-                setCurrentValue(target.value);
-              }}
-            />
-            <button className={styles.button} onClick={editing}>
-              Save
-            </button>
-            <button
-              onClick={cancel}
-              className={`${styles.button} ${styles.buttonCancel}`}
-            >
-              Cancel
-            </button>
+            <h3 className={styles.editTitle}>Edit</h3>
+            <form onSubmit={editing} className={styles.editingPart}>
+              <input
+                value={currentValue}
+                className={styles.input}
+                type="text"
+                onChange={({ target }) => {
+                  setCurrentValue(target.value);
+                }}
+              />
+              <button className={styles.button} onClick={editing}>
+                Save
+              </button>
+              <button
+                onClick={cancel}
+                className={`${styles.button} ${styles.buttonCancel}`}
+              >
+                Cancel
+              </button>
+            </form>
           </div>
         </div>
       )}
@@ -199,7 +203,7 @@ const AddTaske = ({ state, days, months, numberDay, title }) => {
               onClick={(event) => addTask(event, task)}
               className={styles.button}
             >
-              add
+              Add
             </button>
           </div>
         </form>
