@@ -1,49 +1,24 @@
 import React from "react";
 import styles from "./Tasks.module.css";
 import "../App.css";
-import Star from "../../images/Star.svg?react";
 import { useMyContext } from "../context/MyContext";
+import TaskComponent from "./TaskComponent";
 
 const Tasks = () => {
-  const {
-    setImportants,
-    setTasksWhatever,
-    tasksWhatever,
-    completed,
-    setCompleted,
-    setModal,
-    setIndexDelete,
-    editOn,
-    setEditOn,
-    setCurrentValue,
-    setIndexChange,
-  } = useMyContext();
+  const { tasksWhatever, completed, setCompleted } = useMyContext();
 
-  const [options, setOptions] = React.useState(false);
-  const [optionsTask, setOptionsTask] = React.useState(null);
   const importantTask = JSON.parse(localStorage.getItem("importantTask"));
 
   const filteredTasks = tasksWhatever.filter(
-    (item) => !completed.includes(item),
+    (item) => !completed.includes(item) && !importantTask.includes(item),
   );
 
-  const starImportant = (event, taskP) => {
-    const arrayImportant = importantTask ? importantTask : [];
-    if (!importantTask || !arrayImportant.includes(taskP)) {
-      arrayImportant.push(taskP);
-      event.currentTarget.classList.add(`${styles.active}`);
-    } else {
-      const indexToRemove = arrayImportant.indexOf(taskP);
-      if (indexToRemove !== -1) {
-        arrayImportant.splice(indexToRemove, 1);
-        event.currentTarget.classList.remove(`${styles.active}`);
-      }
-    }
-
-    setImportants(arrayImportant);
-    const arrayTurn = JSON.stringify(arrayImportant);
-    localStorage.setItem("importantTask", arrayTurn);
-  };
+  let filteredImportants;
+  if (importantTask) {
+    filteredImportants = importantTask.filter(
+      (item) => !completed.includes(item),
+    );
+  }
 
   React.useEffect(() => {
     if (!localStorage.getItem("importantTask")) {
@@ -85,225 +60,32 @@ const Tasks = () => {
     }
   }, [completed, tasksWhatever]);
 
-  const verification = (task) => {
-    setModal(true);
-    setIndexDelete(task);
-  };
-
-  const editing = (index) => {
-    setEditOn(!editOn);
-    setIndexChange(index); //index correto
-    setCurrentValue(tasksWhatever[index]); // task correta
-  };
-
-  const completingTasks = (event, index) => {
-    if (!completed.includes(tasksWhatever[index])) {
-      setCompleted([...completed, tasksWhatever[index]]);
-      const newWhat = [...tasksWhatever];
-      newWhat.splice(index, 1);
-      setTasksWhatever(newWhat);
-      const lsCompleted = localStorage.getItem("completed");
-      const arrayCompleted = lsCompleted ? JSON.parse(lsCompleted) : [];
-      arrayCompleted.push(tasksWhatever[index]);
-      localStorage.setItem("completed", JSON.stringify(arrayCompleted));
-      event.target.checked = false;
-    } else {
-      uncompleted(completed.indexOf(tasksWhatever[index]));
-    }
-  };
-
-  const uncompleted = (index) => {
-    let newArr = [...completed];
-    newArr.splice(index, 1);
-    setCompleted(newArr);
-  };
-
-  const unmake = (event, index) => {
-    const undo = [...completed];
-    undo.splice(index, 1);
-    setCompleted(undo);
-    setTasksWhatever([...tasksWhatever, completed[index]]);
-    event.target.checked = true;
-  };
-
   React.useEffect(() => {
     setCompleted(JSON.parse(localStorage.getItem("completed")));
   }, [setCompleted]);
 
-  const divOptions = (event, task) => {
-    event.preventDefault();
-    setOptions(!options);
-    setOptionsTask(task);
-  };
-  if (!filteredTasks) return <div>Any important task was found</div>;
-  else if (filteredTasks)
-    return (
-      <div className={styles.tasks}>
-        {filteredTasks.map((task, index) => {
-          if (
-            localStorage.getItem("importantTask") &&
-            JSON.parse(localStorage.getItem("importantTask")).includes(task)
-          ) {
-            return (
-              <div
-                key={`${task} important`}
-                onContextMenu={(event) => {
-                  divOptions(event, task);
-                }}
-                className={styles.taskdid}
-              >
-                {editOn && <input type="text" />}
-                <input
-                  onChange={(event) => {
-                    completingTasks(event, index);
-                  }}
-                  className={styles.checking}
-                  type="checkbox"
-                  name="checking"
-                  id={`${task} important`}
-                />{" "}
-                <p>{task}</p>
-                <button
-                  onClick={(event) => starImportant(event, task)}
-                  className={`${styles.star} ${styles.active}`}
-                >
-                  <Star />
-                </button>
-                {options && optionsTask === task && (
-                  <div className={styles.options}>
-                    <ul>
-                      <li>Remove from My Day</li>
-                      <li onClick={() => editing(index)}>Edit task</li>
-                      <li onClick={(event) => starImportant(event, task)}>
-                        Mark as important
-                      </li>
-                      <li
-                        onClick={() => {
-                          verification(task);
-                        }}
-                      >
-                        delete
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            );
-          } else if (task) {
-            return (
-              <div
-                key={`${task} normalTask`}
-                onContextMenu={(event) => {
-                  divOptions(event, task);
-                }}
-                className={styles.taskdid}
-              >
-                <input
-                  onChange={(event) => {
-                    completingTasks(event, index);
-                  }}
-                  defaultChecked={false}
-                  className={styles.checking}
-                  type="checkbox"
-                  name="checking"
-                  id={`${task} normalTask`}
-                />{" "}
-                <p>{task}</p>
-                <button
-                  onClick={(event) => starImportant(event, task)}
-                  className={`${styles.star} ${
-                    importantTask && importantTask.includes(task)
-                      ? styles.active
-                      : ""
-                  }`}
-                >
-                  <Star />
-                </button>
-                {options && optionsTask === task && (
-                  <div className={styles.options}>
-                    <ul>
-                      <li>Remove from My Day</li>
-                      <li onClick={() => editing(index)}>Edit task</li>
-                      <li onClick={(event) => starImportant(event, task)}>
-                        Mark as important
-                      </li>
-                      <li
-                        onClick={() => {
-                          verification(task);
-                        }}
-                      >
-                        delete
-                      </li>
-                    </ul>
-                  </div>
-                )}
-              </div>
-            );
-          }
+  return (
+    <div className={styles.tasks}>
+      {filteredImportants &&
+        filteredImportants.map((task, index) => {
+          return <TaskComponent key={task} task={task} index={index} />;
         })}
-        {completed.length > 0 && window.location.pathname !== "/important" && (
-          <div className={styles.completed}>
-            <button className={styles.openCompleted}>
-              Completed {completed.length}
-            </button>
-            {completed.map((item, index) => {
-              return (
-                <div
-                  key={item}
-                  onContextMenu={(event) => {
-                    divOptions(event, item);
-                  }}
-                  className={styles.taskdid}
-                >
-                  <input
-                    defaultChecked={true}
-                    onClick={(event) => {
-                      unmake(event, index);
-                    }}
-                    className={styles.checking}
-                    type="checkbox"
-                    name="checking"
-                    id={item}
-                  />{" "}
-                  <div className={styles.risk}>
-                    {" "}
-                    <p>{item}</p>
-                  </div>
-                  <button
-                    onClick={(event) => starImportant(event, item)}
-                    className={`${styles.star} ${
-                      importantTask && importantTask.includes(item)
-                        ? styles.active
-                        : ""
-                    }`}
-                  >
-                    <Star />
-                  </button>
-                  {options && optionsTask === item && (
-                    <div className={styles.options}>
-                      <ul>
-                        <li>Remove from My Day</li>
-
-                        <li onClick={(event) => starImportant(event, item)}>
-                          Mark as important
-                        </li>
-                        <li
-                          onClick={() => {
-                            verification(item);
-                          }}
-                        >
-                          delete
-                        </li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </div>
-    );
+      {filteredTasks &&
+        filteredTasks.map((task, index) => {
+          return <TaskComponent key={task} task={task} index={index} />;
+        })}
+      {completed.length > 0 && window.location.pathname !== "/important" && (
+        <div className={styles.completed}>
+          <button className={styles.openCompleted}>
+            Completed {completed.length}
+          </button>
+          {completed.map((task, index) => (
+            <TaskComponent task={task} index={index} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Tasks;

@@ -2,8 +2,8 @@
 
 .containerGlobal {
   display: flex;
-  gap: 2rem;
-  position: relative;
+  gap: 3.5rem;
+  height: 100%;
 }
 
 .importantTitle {
@@ -16,7 +16,7 @@
 
 .todo {
   display: grid;
-  grid-template-rows: 100px 400px 100px;
+  grid-template-rows: 100px 450px 100px;
   min-height: 600px;
   padding: 4rem 0rem;
 }
@@ -30,7 +30,13 @@
 .myDay {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--purple);
+  background-image: linear-gradient(
+    to right,
+    rgb(149, 59, 245),
+    rgb(220, 183, 255)
+  );
+  background-clip: text;
+  color: transparent;
 }
 
 .day {

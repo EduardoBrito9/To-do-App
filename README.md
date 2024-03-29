@@ -39,7 +39,21 @@ React.
 - [ ] Tasks
 - [ X ] Important
 - [ X ] HomeTasks 
+- [ ] TaskComponent
+
+## Lembretes 
+- Refatorar o codigo
+- Lembrar de sempre fazer const = () =>
+- Pensar sempre em como melhorar o codigo
 
 ## Bugs 
+- Arrumar options ao clicar no botao direito
 
--
+## Melhorias
+- Melhorar a navegacao entre my day e importants (deixar mais suavizada)
+- Ter uma ideia de como melhorar essa animacoes (acho que vou tirar)
+- Buscar inspiracoes para ficar mais bonito
+- Decidir uma nova feature para comecar a trabalhar nessa (apos refatorar o codigo)
+- Separar uma parte apenas para os importants assim como tem uma parte para os completados
+- FAZER UMA FUNCTION PARA LOCALSTORAGE, ISSO VAI OTIMIZAR MUITO O CODIGO
+- FAZER A PARTE DA BOX DE COMPLETED PARA ABRIR E FECHAR COM A ARROW SINALIZANDO 
