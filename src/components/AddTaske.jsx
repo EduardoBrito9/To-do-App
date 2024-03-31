@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./AddTaske.module.css";
 import Navigation from "./Navigation";
 import Tasks from "./Tasks";
+import Planet from "../../images/planet.svg?react";
 import { useMyContext } from "../context/MyContext";
 
 const AddTaske = ({ state, title, days, months, numberDay }) => {
@@ -66,9 +67,6 @@ const AddTaske = ({ state, title, days, months, numberDay }) => {
   const deleteTask = (task) => {
     const localSto = JSON.parse(localStorage.getItem("storage"));
     const completedSto = JSON.parse(localStorage.getItem("completed"));
-
-    console.log(impLocal, localSto, completedSto);
-
     if (localSto && localSto.includes(task)) {
       const ars = [...localSto];
       const indexof = ars.indexOf(task);
@@ -129,25 +127,8 @@ const AddTaske = ({ state, title, days, months, numberDay }) => {
       setEditOn(false);
     }
   };
-
   return (
     <section className={styles.containerGlobal}>
-      {modal && (
-        <div className={styles.modal}>
-          <div className={styles.question}>
-            {" "}
-            <h3>Delete task</h3>
-            <span> will be permanently deleted.</span>
-          </div>
-
-          <div className={styles.buttonsSure}>
-            <button onClick={confirmation}>Delete</button>
-            <button onClick={cancel} className={styles.cancel}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
       {editOn && (
         <div onClick={outside} className={styles.editingTaskContainer}>
           <div className={styles.editingTask}>
@@ -174,11 +155,28 @@ const AddTaske = ({ state, title, days, months, numberDay }) => {
           </div>
         </div>
       )}
+      {modal && (
+        <div className={styles.modal}>
+          <div className={styles.question}>
+            {" "}
+            <h3>Delete task</h3>
+            <span> will be permanently deleted.</span>
+          </div>
+
+          <div className={styles.buttonsSure}>
+            <button onClick={confirmation}>Delete</button>
+            <button onClick={cancel} className={styles.cancel}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
       <Navigation />
       <div className={styles.todo}>
         <div className={styles.date}>
-          <h1 className={days ? styles.myDay : styles.importantTitle}>
+          <h1 className={styles.myDay}>
             {title}
+            <Planet className={styles.planet} />
           </h1>
           {days && (
             <span className={styles.day}>
@@ -188,9 +186,21 @@ const AddTaske = ({ state, title, days, months, numberDay }) => {
         </div>
 
         <Tasks />
-        <form onSubmit={addTask} className={styles.forms}>
+        <form
+          onSubmit={(event) => addTask(event, task)}
+          className={styles.forms}
+        >
           <div className={styles.add}>
             <input
+              onFocus={(event) => {
+                event.target.setAttribute(
+                  "placeholder",
+                  "Try typing 'Pay utilities bill by Friday 6pm'",
+                );
+              }}
+              onBlur={(event) => {
+                event.target.setAttribute("placeholder", "Add a task");
+              }}
               placeholder="Add a task"
               value={task}
               className={styles.input}
@@ -199,12 +209,6 @@ const AddTaske = ({ state, title, days, months, numberDay }) => {
               }}
               type="text"
             />{" "}
-            <button
-              onClick={(event) => addTask(event, task)}
-              className={styles.button}
-            >
-              Add
-            </button>
           </div>
         </form>
       </div>

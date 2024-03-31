@@ -5,6 +5,7 @@ import StartPage from "./components/StartPage";
 import Important from "./components/Important";
 import HomeTasks from "./components/HomeTasks";
 import { MyContextProvider } from "./context/MyContext";
+import MyWeek from "./components/MyWeek";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<StartPage />} />
             <Route path="/important" element={<Important />} />
+            <Route path="/myweek" element={<MyWeek />} />
             <Route path="/home" element={<HomeTasks />} />
           </Routes>
         </section>

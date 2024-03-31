@@ -1,40 +1,39 @@
 .navigation {
   border-radius: 8px;
   background-color: rgb(20, 20, 20);
-  padding: 1rem 0rem;
   height: auto;
+  padding: 10px 10px;
 }
 
 .links {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  gap: 0.3rem;
 }
 
 .navli {
-  font-size: 0.87rem;
-  border-radius: 10px;
-  color: white;
-  transition: 0.3s;
   display: grid;
   align-items: center;
   justify-content: center;
-  grid-template-columns: 40px 1fr;
+  font-weight: 700;
+  font-size: 0.87rem;
+  border-radius: 10px;
+  color: white;
   align-items: center;
+  grid-template-columns: 40px 1fr;
+  transition: 0.1s;
   gap: 0.5rem;
   padding: 0.9rem 8rem 0.9rem 1rem;
+  border-left: 2px solid transparent;
 }
 
 .navli:hover {
-  background-color: rgb(74, 74, 74);
-  transition: 0.3s;
+  background-color: rgb(47, 47, 47);
+  transition: 0.1s;
 }
 
 .navli svg {
   width: 30px;
   justify-self: center;
-}
-
-.star svg {
-  width: 23px;
 }

@@ -12,8 +12,8 @@ body {
   --white: #fafafa;
   --whitec: rgb(204, 204, 204);
   --gray: #888888;
-  --purple: rgb(149, 59, 245);
-  --lightPurple: rgb(210, 147, 255);
+  --orange: rgb(255, 55, 0);
+  --lightorange: rgb(239, 109, 73);
   --blackback: rgb(34, 34, 34);
   --blackp: rgb(128, 125, 125);
   --backgroundBlack: hsl(240, 10%, 3.9%);
@@ -54,4 +54,9 @@ body {
 
 strong {
   color: var(--whitec);
+}
+
+.active {
+  border-left: 2px solid var(--orange) !important;
+  background-color: rgb(47, 47, 47);
 }

@@ -67,20 +67,20 @@ const Tasks = () => {
   return (
     <div className={styles.tasks}>
       {filteredImportants &&
-        filteredImportants.map((task, index) => {
-          return <TaskComponent key={task} task={task} index={index} />;
+        filteredImportants.map((task) => {
+          return <TaskComponent key={task} task={task}  />;
         })}
       {filteredTasks &&
-        filteredTasks.map((task, index) => {
-          return <TaskComponent key={task} task={task} index={index} />;
+        filteredTasks.map((task) => {
+          return <TaskComponent key={task} task={task}  />;
         })}
       {completed.length > 0 && window.location.pathname !== "/important" && (
         <div className={styles.completed}>
           <button className={styles.openCompleted}>
             Completed {completed.length}
           </button>
-          {completed.map((task, index) => (
-            <TaskComponent task={task} index={index} />
+          {completed.map((task) => (
+            <TaskComponent key={task} task={task} />
           ))}
         </div>
       )}

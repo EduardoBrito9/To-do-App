@@ -3,7 +3,7 @@ import { useMyContext } from "../context/MyContext";
 import styles from "./TaskComponent.module.css";
 import Star from "../../images/Star.svg?react";
 
-const TaskComponent = ({ task, index }) => {
+const TaskComponent = ({ task }) => {
   const {
     setImportants,
     setTasksWhatever,
@@ -20,15 +20,15 @@ const TaskComponent = ({ task, index }) => {
   const [options, setOptions] = React.useState(false);
   const [optionsTask, setOptionsTask] = React.useState(null);
   const importantTask = JSON.parse(localStorage.getItem("importantTask"));
-  const checkingCompleted = (task) => completed.includes(task);
+  const checkingCompleted = () => completed.includes(task);
 
-  const starImportant = (event, taskP) => {
+  const starImportant = (event) => {
     const arrayImportant = importantTask ? importantTask : [];
-    if (!importantTask || !arrayImportant.includes(taskP)) {
-      arrayImportant.push(taskP);
+    if (!importantTask || !arrayImportant.includes(task)) {
+      arrayImportant.push(task);
       event.currentTarget.classList.add(`${styles.active}`);
     } else {
-      const indexToRemove = arrayImportant.indexOf(taskP);
+      const indexToRemove = arrayImportant.indexOf(task);
       if (indexToRemove !== -1) {
         arrayImportant.splice(indexToRemove, 1);
         event.currentTarget.classList.remove(`${styles.active}`);
@@ -40,99 +40,108 @@ const TaskComponent = ({ task, index }) => {
     localStorage.setItem("importantTask", arrayTurn);
   };
 
-  const divOptions = (event, task) => {
+  const divOptions = (event) => {
     event.preventDefault();
     setOptions(!options);
     setOptionsTask(task);
   };
 
-  const completingTasks = (event, index) => {
-    if (!completed.includes(tasksWhatever[index])) {
-      setCompleted([...completed, tasksWhatever[index]]);
+  const completingTasks = (event) => {
+    const indexofcompleted = completed.indexOf(task);
+    const indexofwhatever = tasksWhatever.indexOf(task);
+    console.log(task, indexofcompleted, indexofwhatever);
+    if (!completed.includes(task)) {
+      setCompleted([...completed, task]);
       const newWhat = [...tasksWhatever];
-      newWhat.splice(index, 1);
+      newWhat.splice(indexofwhatever, 1);
       setTasksWhatever(newWhat);
       const lsCompleted = localStorage.getItem("completed");
       const arrayCompleted = lsCompleted ? JSON.parse(lsCompleted) : [];
-      arrayCompleted.push(tasksWhatever[index]);
+      arrayCompleted.push(task);
       localStorage.setItem("completed", JSON.stringify(arrayCompleted));
       event.target.checked = false;
-    } else {
-      uncompleted(completed.indexOf(tasksWhatever[index]));
     }
   };
 
-  const verification = (task) => {
+  const verification = () => {
+    setOptions(false);
     setModal(true);
     setIndexDelete(task);
   };
 
-  const editing = (index) => {
+  const editing = () => {
+    const indexof = tasksWhatever.indexOf(task);
     setEditOn(!editOn);
-    setIndexChange(index);
-    setCurrentValue(tasksWhatever[index]);
+    setOptions(false);
+    setIndexChange(indexof);
+    setCurrentValue(tasksWhatever[indexof]);
   };
 
-  const uncompleted = (index) => {
-    let newArr = [...completed];
-    newArr.splice(index, 1);
-    setCompleted(newArr);
-  };
-
-  const unmake = (event, index) => {
+  const unmake = (event) => {
+    const indof = completed.indexOf(task);
     const undo = [...completed];
-    undo.splice(index, 1);
+    undo.splice(indof, 1);
     setCompleted(undo);
-    setTasksWhatever([...tasksWhatever, completed[index]]);
+    setTasksWhatever([...tasksWhatever, task]);
     event.target.checked = true;
   };
 
   return (
     <div
-      key={`${task} important`}
+      key={`${task}`}
       onContextMenu={(event) => {
-        divOptions(event, task);
+        divOptions(event);
       }}
       className={styles.taskdid}
     >
-      {editOn && <input type="text" />}
       <input
-        defaultChecked={checkingCompleted(task) ? true : false}
+        defaultChecked={checkingCompleted() ? true : false}
         onChange={
-          checkingCompleted(task)
+          checkingCompleted()
             ? (event) => {
-                unmake(event, index);
+                unmake(event);
               }
-            : (event) => completingTasks(event, index)
+            : (event) => completingTasks(event)
         }
         className={styles.checking}
         type="checkbox"
         name="checking"
         id={`${task} important`}
       />{" "}
-      <div className={checkingCompleted(task) ? styles.risk : ""}>
+      <div className={checkingCompleted() ? styles.risk : ""}>
         {" "}
         <p>{task}</p>
       </div>
       <button
-        onClick={(event) => starImportant(event, task)}
+        onClick={(event) => starImportant(event)}
         className={`${styles.star} ${
           importantTask.includes(task) ? styles.active : ""
         }`}
       >
         <Star />
       </button>
-      {options && optionsTask === task && (
+      {options && completed.includes(task) && optionsTask === task && (
+        <div className={styles.options}>
+          <ul>
+            <li
+              onClick={() => {
+                verification();
+              }}
+            >
+              Delete
+            </li>
+          </ul>
+        </div>
+      )}
+      {options && !completed.includes(task) && optionsTask === task && (
         <div className={styles.options}>
           <ul>
             <li>Remove from My Day</li>
-            <li onClick={() => editing(index)}>Edit task</li>
-            <li onClick={(event) => starImportant(event, task)}>
-              Mark as important
-            </li>
+            <li onClick={() => editing()}>Edit task</li>
+            <li onClick={(event) => starImportant(event)}>Mark as important</li>
             <li
               onClick={() => {
-                verification(task);
+                verification();
               }}
             >
               Delete

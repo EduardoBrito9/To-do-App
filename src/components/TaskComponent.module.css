@@ -20,12 +20,12 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:hover {
-  background-color: var(--lightPurple);
+  background-color: var(--lightorange);
   transition: 0.3s;
 }
 
 input[type="checkbox"]:checked {
-  background-color: var(--purple);
+  background-color: var(--orange);
   transition: 0.3s;
   border: 0;
 }
@@ -65,16 +65,26 @@ input[type="checkbox"]:checked:after {
   grid-column: 5;
 }
 
+.star:hover {
+  cursor: pointer;
+}
+
 .star svg {
   height: 20px;
 }
 
+.star:hover svg path {
+  fill: var(--lightorange);
+  transition: 0.3s;
+}
+
 .star.active svg path {
-  fill: rgb(152, 0, 253);
+  fill:  rgb(255, 55, 0)
 }
 
 .star svg path {
   fill: white;
+  transition: 0.3s;
 }
 
 @keyframes anime {
